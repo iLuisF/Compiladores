@@ -1,11 +1,11 @@
 package testmaven;
 %%
-%class AléxicoC
+%class AlexicoC
 %public
 %standalone
 %unicode
 PUNTO   = \.
-ENTERO  = ENTERO_POS | ENTERO_NEG
+ENTERO  = {ENTERO_POS} | {ENTERO_NEG}
 ENTERO_POS  = [0-9][0-9]*
 ENTERO_NEG  = [-][1-9][0-9]*
 FLOTANTE = {ENTERO} {PUNTO} {ENTERO_POS} f
@@ -13,7 +13,7 @@ FLOTANTE = {ENTERO} {PUNTO} {ENTERO_POS} f
 NO_ID_C = auto | break
     |case
     |char
-    |const
+    |consts
     |continue
     |default
     |do
@@ -42,8 +42,8 @@ NO_ID_C = auto | break
     |volatile
     |while
 
-ID_C = ID_C_AUX | [_] ID_C_AUX
-ID_C_AUX = [:letter:] [:letterdigit:]*
+ID_C = [:letter:] {ID_C_AUX} | _* ([:letter:] | [:digit:]) {ID_C_AUX}
+ID_C_AUX = ([:letter:] | [:digit:] | _)*
 
     
 
@@ -51,8 +51,9 @@ COMENTARIO = \/\/ .* | \/\* ( . | \n )*  \*\/
 
 
 %%
+{NO_ID_C}       {System.out.print("-"); }
 {ENTERO}      { System.out.print("ENTERO("+yytext() + ")"); }
 {ID_C}     { System.out.print("ID_C("+yytext() + ")"); }
-{COMENTARIO}     { System.out.print("FLOTANTE("+yytext() + ")"); }
-{FLOTANTE}     { System.out.print("COMENTARIO("+yytext() + ")"); }
-.             { }
+{COMENTARIO}     { System.out.print("COMENTARIO("+yytext() + ")"); }
+{FLOTANTE}     { System.out.print("FLOTANTE("+yytext() + ")"); }
+.             { System.out.print("--"); }

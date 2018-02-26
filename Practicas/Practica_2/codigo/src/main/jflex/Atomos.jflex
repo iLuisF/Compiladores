@@ -1,6 +1,6 @@
 package testmaven;
 %%
-%class AlÃ©xico
+%class Aléxico
 %public
 %standalone
 %unicode
