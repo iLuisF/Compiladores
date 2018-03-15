@@ -1,6 +1,34 @@
 package com.kaab.compiladores.lexico;
+import java.util.Stack;
+import java.util.Arrays;
 
 %%
+
+%{
+public int tabulador;
+public Stack<Integer> pila = new Stack<Integer>();
+
+/**
+ * Regresa por cada linea el nivel de identación e deindentación.
+ */
+public String getTabulador(){       
+    //Primer entrada
+    if(pila.empty()){
+        pila.push(tabulador);
+        return "INDENTA(" + this.pila.peek() + ")";
+    } else {
+        //La identación va aumentando.
+        if(pila.peek() <= tabulador){
+            pila.push(tabulador);
+            return "INDENTA(" + this.pila.peek() + ")";
+        } else {
+            pila.push(tabulador);
+            return "DEINDENTA(" + this.pila.peek() + ")";
+        }
+    }    
+}
+
+%}
 
 %class Flexer
 %public
@@ -26,7 +54,7 @@ SEPARADOR       =       \:
 
 %%
 
-[/n]                { System.out.println("SALTO"); }
+[\n]                { System.out.println("SALTO"); this.tabulador = 0;}
 {P_RESERVADA}       { System.out.print("RESERVADA(" + yytext() + ")"); }
 {IDENTIFICADOR}     { System.out.print("IDENTIFICADOR(" + yytext() + ")"); }
 {BOOLEANO}          { System.out.print("BOOLEANO(" + yytext() + ")"); }
@@ -35,3 +63,5 @@ SEPARADOR       =       \:
 {CADENA}            { System.out.print("CADENA(" + yytext() + ")"); }
 {OPERADOR}          { System.out.print("OPERADOR(" + yytext() + ")"); }
 {SEPARADOR}         { System.out.print("SEPARADOR(" + yytext() + ")"); }
+
+"\t"                {this.tabulador++; System.out.print(getTabulador()); }
