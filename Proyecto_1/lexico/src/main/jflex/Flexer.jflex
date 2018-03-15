@@ -7,6 +7,7 @@ import java.util.Arrays;
 %{
 public int tabLen;
 public Stack<Integer> pila = new Stack<Integer>();
+public int espacios;
 
 /**
  * Regresa por cada linea el nivel de identación y deindentación.
@@ -14,7 +15,7 @@ public Stack<Integer> pila = new Stack<Integer>();
 
 public String errorIndent(int sizeError){
     return "Error de indentacion, linea " + yyline + "\n"+
-            "Los bloques son de longitud 4, longitud encontrada :" + sizeError );
+            "Los bloques son de longitud 4, longitud encontrada :" + sizeError;
 }
 
 public String generaIndent(int size){
@@ -69,8 +70,7 @@ public String getIndentaDeindenta(){
 %standalone
 %unicode
 %line
-
-TAB             =       [ ]
+%x CONTEXTO
 
 BOOLEANO        =       True | False
 
@@ -89,11 +89,13 @@ OPERADOR        =       \+ | \- | \* | \*\* | \/ | \/\/ | \% | \< | \> | \>\=
 
 SEPARADOR       =       \:
 
+TABULADOR       =       "/t"
 
+ESPACIO         =       " "
 
 %%
 
-[\n]                { System.out.println("SALTO"); this.tabulador = 0;}
+[\n]                { System.out.println("SALTO"); this.espacios = 0;}
 {P_RESERVADA}       { System.out.print("RESERVADA(" + yytext() + ")"); }
 {IDENTIFICADOR}     { System.out.print("IDENTIFICADOR(" + yytext() + ")"); }
 {BOOLEANO}          { System.out.print("BOOLEANO(" + yytext() + ")"); }
@@ -103,4 +105,12 @@ SEPARADOR       =       \:
 {OPERADOR}          { System.out.print("OPERADOR(" + yytext() + ")"); }
 {SEPARADOR}         { System.out.print("SEPARADOR(" + yytext() + ")"); }
 
-{TAB}               { this.tab++; System.out.print(getIndentaDeindenta()); }
+
+
+<CONTEXTO>{
+    {ESPACIO}    =  {this.espacios++;}
+    {TABULADOR}  =  {this.espacios+=4;}
+    . {System.out.println(this.espacios); yybegin(YYINITIAL)}
+}
+
+. { }
