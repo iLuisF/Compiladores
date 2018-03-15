@@ -24,14 +24,14 @@ OPERADOR        =       \+ | \- | \* | \*\* | \/ | \/\/ | \% | \< | \> | \>\=
 
 SEPARADOR       =       \:
 
-
 %%
 
-{IDENTIFICADOR}     { System.out.print("IDENTIFICADOR(" + yytext() + ")" ); }
-{BOOLEANO}          { System.out.print("BOOLEANO(" + yytext() + ")" ); }
-{ENTERO}            { System.out.print("ENTERO(" + yytext() + ")" ); }
-{REAL}              { System.out.print("REAL(" + yytext() + ")" ); }
-{CADENA}            { System.out.print("CADENA(" + yytext() + ")" ); }
-{P_RESERVADA}       { System.out.print("RESERVADA(" + yytext() + ")" ); }
-{OPERADOR}          { System.out.print("OPERADOR(" + yytext() + ")" ); }
-{SEPARADOR}         { System.out.print("SEPARADOR(" + yytext() + ")" ); }
+[/n]                { System.out.println("SALTO"); }
+{P_RESERVADA}       { System.out.print("RESERVADA(" + yytext() + ")"); }
+{IDENTIFICADOR}     { System.out.print("IDENTIFICADOR(" + yytext() + ")"); }
+{BOOLEANO}          { System.out.print("BOOLEANO(" + yytext() + ")"); }
+{ENTERO}            { System.out.print("ENTERO(" + yytext() + ")"); }
+{REAL}              { System.out.print("REAL(" + yytext() + ")"); }
+{CADENA}            { System.out.print("CADENA(" + yytext() + ")"); }
+{OPERADOR}          { System.out.print("OPERADOR(" + yytext() + ")"); }
+{SEPARADOR}         { System.out.print("SEPARADOR(" + yytext() + ")"); }
