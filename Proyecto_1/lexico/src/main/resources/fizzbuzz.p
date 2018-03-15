@@ -1,6 +1,5 @@
-
 val_max = 50
-count = 1
+count = 1   
 abc = True
 soy_un_real1 = .7765784
 soy_un_real2 = 123546.08976
