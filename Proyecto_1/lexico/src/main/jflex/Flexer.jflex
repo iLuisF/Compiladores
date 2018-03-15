@@ -27,74 +27,40 @@ public String generaDeindent(int size){
 
 public String getIndentaDeindenta(){
     
-    if(pila.empty()){  // Verifica si la pila esta vacia para detectar el primer bloque a poner
-
-        if( tablen == 4 ){  // El primer tab en la pila debe ser de tama;o 4
-            push(tablen);
-            // return generaIndent(tablen);
-        }else{
-            return errorIndent(tablen);
-        }
-        else{ // Si la pila ya tiene al menos un elemento
-            // Caso 1:
-            // Verifica si la nueva identacion es mayor al ultimo elemento insertado
-            if(pila.peek() < tabLen){
-                if( tablen % 4 == 0){
-                    // Es una longitud correcta del nuevo bloque
-                    pila.push(tabLen);
-                    // return genera
-                }else{
-                    return errorIndent(tablen % 4);
+    if(pila.peek() == 0){  // Verifica si la pila esta vacia para detectar el primer bloque a poner
+        push(tabLen);
+        return generaIndent(tablen);
+    else{ // Si la pila ya tiene al menos un elemento
+        // Caso 1:
+        // Verifica si la nueva identacion es mayor al ultimo elemento insertado
+        if(pila.peek() < tabLen){
+            // Es una longitud correcta del nuevo bloque
+            pila.push(tabLen);
+        }    
+        // Caso 2:
+        // Verifica si la nueva identacion es menor al ultimo elemento insertado
+        else if( pila.peek() > tabLen){
+            String tokens = "";
+            // Se va sacando un bloque y generando un token hasta que empaten
+            while( pila.peek() != tabLen ){
+                if( tabLen < pila.peek() ){
+                    //throw error
+                    break;
                 }
+                tokens += generaDeindent(pila.push());
             }
-
-            // Caso 2:
-            // Verifica si la nueva identacion es menor al ultimo elemento insertado
-            else if( pila.peek() > tabLen){
-                if( tablen % 4 == 0){ //  Revisa la longitud del bloque
-                    String tokens = "";
-                    // Se va restando 4 y sacando un bloque
-                    while(pila.peek() != tabLen){
-                        tokens += generaDeindent(pila.push());
-                        tabLen -= 4;
-                    }
-                    return tokens;
-                }else{
-                    return errorIndent(tablen % 4);
-                }
-            }
-
-            // Caso 3:
-            // Verifica si la nueva identacion es migual al ultimo elemento insertado
-            else if( pila.peek() == tabLen){
-                //Se trata del mismo bloque, no hay que producir nada
-                return "";
-            }
+            return tokens;
         }
-        return tabLen;
+        // Caso 3:
+        // Verifica si la nueva identacion es migual al ultimo elemento insertado
+        else if( pila.peek() == tabLen ){
+            //Se trata del mismo bloque, no hay que producir nada
+            return "";
+        }
+    }
+    return generaIndent(tabLen);
     }
 }
-
-/*
-//Debe haber un pretab
-
-public String getTabulador(){       
-    //Primer entrada
-    if(pila.empty()){
-        pila.push(tabLen);
-        return "INDENTA(" + this.pila.peek() + ")";
-    } else {
-        //La identación va aumentando.
-        if(pila.peek() <= tabulador){
-            pila.push(tabulador);
-            return "INDENTA(" + this.pila.peek() + ")";
-        } else {
-            pila.push(tabulador);
-            return "DEINDENTA(" + this.pila.peek() + ")";
-        }
-    }    
-}
-*/
 
 %}
 
