@@ -1,11 +1,13 @@
 package com.kaab.compiladores.lexico;
 import java.util.Stack;
 import java.util.Arrays;
+import java.io.FileWriter;
+import java.io.IOException;
 
 %%
 
 %{
-
+    public FileWriter fw;
     public int tabLen;
     public Stack<Integer> pila = new Stack<Integer>();
     public int espacios = 0;
@@ -15,24 +17,33 @@ import java.util.Arrays;
      * Regresa por cada linea el nivel de identación y deindentación.
      */
 
-    public String errorIndent(int sizeError){
-        return "Error de indentacion, linea " + yyline + "\n"+
-                "Los bloques son de longitud 4, longitud encontrada :" + sizeError;
+    public String generaIndent(int size) {
+        String v = "INDENTA(" + size  + ")";
+        try{
+            fw.write(v);
+        }catch(IOException e){
+            System.out.println("ERROR CON EL ARCHIVO");
+            e.printStackTrace();
+        }
+        return v;
     }
 
-    public String generaIndent(int size){
-        return "INDENTA(" + size  + ")";
+    public String generaDeindent(int size) {
+        String v = "DEINDENTA(" + size  + ")";
+        try{
+            fw.write(v);
+        }catch(IOException e){
+            System.out.println("ERROR CON EL ARCHIVO");
+            e.printStackTrace();
+        }
+        return v;
     }
 
-    public String generaDeindent(int size){
-        return "DEINDENTA(" + size  + ")";
-    }
-
-    public String getIndentaDeindenta(){
+    public String getIndentaDeindenta() throws IOException{
 
         if(tabLen == 0 && pila.empty()){  // Verifica si la pila esta vacia para detectar el primer bloque a poner
             pila.push(tabLen);
-            //return generaIndent(tabLen);
+
         }else{ // Si la pila ya tiene al menos un elemento
             // Caso 1:
             // Verifica si la nueva identacion es mayor al ultimo elemento insertado
@@ -48,7 +59,10 @@ import java.util.Arrays;
                 while( pila.peek() != tabLen ){
                     if( tabLen > pila.peek() ){
                         //throw error
-                        System.out.println("Error identacion, linea "+ yyline);
+                        System.out.println("\nError identacion, linea "+ yyline);
+                        fw.write("\nError identacion, linea "+ yyline);
+                        fw.flush();
+                        fw.close();
                         System.exit(0);
                         break;
                         
@@ -106,22 +120,33 @@ ESPACIO         =       " "
 "("                 {}
 ")"                 {}
 {ESPACIO}           {}
-[\n]                { System.out.println("SALTO"); yybegin(CONTEXTO); this.espacios = 0;}
-{P_RESERVADA}       { System.out.print("RESERVADA(" + yytext() + ")"); }
-{IDENTIFICADOR}     { System.out.print("IDENTIFICADOR(" + yytext() + ")"); }
-{BOOLEANO}          { System.out.print("BOOLEANO(" + yytext() + ")"); }
-{ENTERO}            { System.out.print("ENTERO(" + yytext() + ")"); }
-{REAL}              { System.out.print("REAL(" + yytext() + ")"); }
+[\n]                { System.out.println("SALTO"); yybegin(CONTEXTO); this.espacios = 0;
+                      fw.write("SALTO");
+}
+{P_RESERVADA}       { System.out.print("RESERVADA(" + yytext() + ")"); fw.write("RESERVADA(" + yytext() + ")");}
+{IDENTIFICADOR}     { System.out.print("IDENTIFICADOR(" + yytext() + ")"); fw.write("IDENTIFICADOR(" + yytext() + ")"); }
+{BOOLEANO}          { System.out.print("BOOLEANO(" + yytext() + ")"); fw.write("BOOLEANO(" + yytext() + ")");}
+{ENTERO}            { System.out.print("ENTERO(" + yytext() + ")"); fw.write("ENTERO(" + yytext() + ")");}
+{REAL}              { System.out.print("REAL(" + yytext() + ")"); fw.write("REAL(" + yytext() + ")");}
 {CADENA}            { cadenaActual = yytext();
-                      if(cadenaActual.contains("\"") || cadenaActual.contains("\"")){
-                       System.out.print("\nError de cadena, linea:" + yyline); System.exit(0);
+                      if(cadenaActual.contains("\\") || cadenaActual.substring(1, cadenaActual.length()-1).contains("\"")){
+                       System.out.print("\nError de cadena: "+ cadenaActual +", linea:" + yyline);
+                       fw.write("\nError de cadena: "+ cadenaActual +", linea:" + yyline);
+                        fw.flush();
+                        fw.close();
+                       System.exit(0);
                        }else{ 
-                            System.out.print("CADENA(" + yytext() + ")"); 
-                        }
+                            System.out.print("CADENA(" + yytext() + ")");  
+                            fw.write("CADENA(" + yytext() + ")");
+                       }
                     }
-{OPERADOR}          { System.out.print("OPERADOR(" + yytext() + ")"); }
-{SEPARADOR}         { System.out.print("SEPARADOR(" + yytext() + ")"); }
-.                   { System.out.print("\nError, lexema no identificado, linea:" + yyline); System.exit(0);}
+{OPERADOR}          { System.out.print("OPERADOR(" + yytext() + ")"); fw.write("OPERADOR(" + yytext() + ")");}
+{SEPARADOR}         { System.out.print("SEPARADOR(" + yytext() + ")"); fw.write("SEPARADOR(" + yytext() + ")");}
+.                   { System.out.print("\nError, lexema no identificado, linea:" + yyline); 
+                      fw.write("\nError, lexema no identificado, linea:" + yyline);
+                        fw.flush();
+                        fw.close();
+                    System.exit(0);}
 
 <CONTEXTO>{
     {ESPACIO}      {this.espacios++; }
