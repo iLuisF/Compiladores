@@ -21,6 +21,7 @@ public class AnalizadorLexico {
 
     public void analiza(){
         try{
+            lexer.pila.push(0);
           lexer.yylex();
         }catch(IOException ex){
             System.out.println(ex.getMessage());
