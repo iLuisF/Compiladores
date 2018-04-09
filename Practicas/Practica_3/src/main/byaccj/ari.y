@@ -5,6 +5,11 @@
 
 %token<sval> NODO
 %type<sval> Lista input
+%token E1
+%token E2
+%token T1
+%token T2
+%token F
 
 /* Gramática con recursión izquierda */
 %%
