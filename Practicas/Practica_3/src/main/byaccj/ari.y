@@ -5,22 +5,22 @@
 
 %token<sval> NODO
 %type<sval> Lista input
-%token E1
-%token E2
-%token T1
-%token T2
-%token F
+%token PARENTESIS_ABIERTO
+%token PARENTESIS_CERRADO
+%left MAS_MENOS                 //Asociatividad(evitar ambiguedad).
+%left MULTIPLICACION_DIVISION   //Asociatividad(evitar ambiguedad).
+%token NUMBER
 
-/* Gram谩tica con recursi贸n izquierda */
+/* Gram醫ica con recursi髇 izquierda */
 %%
 input : Lista {$$ = $1; System.out.println("[OK] "+ $$  );}
-      |       { System.out.println("[Ok Lista Vac铆a] ");}
+      |       { System.out.println("[Ok Lista Vac韆] ");}
 ;
 
 Lista: Lista NODO {$$ = $1 + $2;}
      | NODO {$$ = $1;}
 %%
-/* Referencia a analizador l茅xico */
+/* Referencia a analizador l閤ico */
 private Nodos lexer;
 
 private int yylex () {
@@ -34,7 +34,7 @@ private int yylex () {
     return yyl_return;
 }
 
-/* Funci贸n para reportar error */
+/* Funci髇 para reportar error */
 public void yyerror (String error) {
     System.err.println ("[ERROR]  " + error);
     System.exit(1);
@@ -45,7 +45,7 @@ public Parser(Reader r) {
     lexer = new Nodos(r, this);
 }
 
-/* Creaci贸n del parser e inicializaci贸n del reconocimiento */
+/* Creaci髇 del parser e inicializaci髇 del reconocimiento */
 public static void main(String args[]) throws IOException {
     Parser parser = new Parser(new FileReader(args[0]));
     parser.yyparse();
