@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-initialize</actionName>
+            <displayName>initialize</displayName>
+            <goals>
+                <goal>exec:exec</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>run</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:java</goal>
+            </goals>
+            <properties>
+                <exec.mainClass>asintactico.Parser</exec.mainClass>
+                <exec.args>"src/main/resources/test.txt"</exec.args>
+            </properties>
+        </action>
+    </actions>
