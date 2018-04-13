@@ -1,27 +1,55 @@
 %{
-  import java.lang.Math;
-  import java.io.*;
+//IMPORTS
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 %}
 
-%token<sval> NODO
-%type<sval> Lista input
-%token PARENTESIS_ABIERTO
-%token PARENTESIS_CERRADO
-%left MAS_MENOS                 //Asociatividad(evitar ambiguedad).
-%left MULTIPLICACION_DIVISION   //Asociatividad(evitar ambiguedad).
-%token NUMBER
+/*
+GRAMATICA 1
+*/
 
-/* Gramática con recursión izquierda */
+%token NUMBER
+%token NODO
+%token MAS MENOS
+%token MULT DIV
+%type <dval> E EMA EME T F
+%type <dval> eval
+
 %%
-input : Lista {$$ = $1; System.out.println("[OK] "+ $$  );}
-      |       { System.out.println("[Ok Lista Vacía] ");}
+
+eval : E {$$ = $1; System.out.println("[OK] "+ $$  );}
+    |       { System.out.println("[Ok Lista Vacia] ");}
 ;
 
-Lista: Lista NODO {$$ = $1 + $2;}
-     | NODO {$$ = $1;}
+E   :   T       
+    |   E MAS T     
+    |   E MAS E2 T
+    |   E MENOS T
+    |   E MENOS E2 T
+;
+
+E2  :   E MAS E2
+    |   E MAS    
+;
+
+
+T   :   F
+    |   T MULT F
+    |   T MULT T2 F
+
+T2  :   T MULT T2
+    |   T MULT
+
+F   : NUMBER
+
+
 %%
-/* Referencia a analizador léxico */
+
+/* Referencia a analizador lexico */
 private Nodos lexer;
+
+/* */
 
 private int yylex () {
     int yyl_return = -1;
@@ -34,9 +62,9 @@ private int yylex () {
     return yyl_return;
 }
 
-/* Función para reportar error */
+/* Funcion para reportar error */
 public void yyerror (String error) {
-    System.err.println ("[ERROR]  " + error);
+    System.err.println ("[ERROR] " + error);
     System.exit(1);
 }
 
@@ -45,7 +73,7 @@ public Parser(Reader r) {
     lexer = new Nodos(r, this);
 }
 
-/* Creación del parser e inicialización del reconocimiento */
+/* Creacion del parser e inicializacion del reconocimiento */
 public static void main(String args[]) throws IOException {
     Parser parser = new Parser(new FileReader(args[0]));
     parser.yyparse();
