@@ -6,7 +6,7 @@ import java.io.Reader;
 %}
 
 /*
-GRAMATICA 1
+GRAMATICA 2
 */
 
 %token <sval> MAS MENOS MULT DIV
@@ -18,36 +18,36 @@ GRAMATICA 1
 %%
 
 eval : E {$$ = $1; System.out.println("[OK] Resultado: "+ $$ );}
-    |       { System.out.println("[OK] ENTRADA VAC√çA ");}
+    |       { System.out.println("[OK] ENTRADA VAC√?A ");}
 ;
 
-E   :   T        {$$ = $1; }    
-    |   T E2MA   { $$ = $1 + $2;}
-    |   T E2ME   { $$ = $1 - $2;}
+E   :   T        {$$ = $1; dump_stacks(stateptr);}    
+    |   T E2MA   { $$ = $1 + $2; dump_stacks(stateptr);}
+    |   T E2ME   { $$ = $1 - $2; dump_stacks(stateptr);}
 ;
 
-E2MA  :   MAS E         { $$ = $2; }       
+E2MA  :   MAS E         { $$ = $2; dump_stacks(stateptr);}       
 ;
 
-E2ME  :   MENOS EAUX       { $$ = $2; }
+E2ME  :   MENOS EAUX       { $$ = $2; dump_stacks(stateptr);}
 ;
 
-EAUX   :   T        {$$ = -1 * $1; }    
-    |   T E2MA   { $$ = $1 - $2;}
-    |   T E2ME   { $$ = $1 + $2;}
+EAUX   :   T        {$$ = -1 * $1; dump_stacks(stateptr);}    
+    |   T E2MA   { $$ = $1 - $2; dump_stacks(stateptr);}
+    |   T E2ME   { $$ = $1 + $2; dump_stacks(stateptr);}
 
-T   :   F               {$$ = $1;}    
-    |   F T2MU          {$$ = $1 * $2;}
-    |   F T2DI          {$$ = $1 / $2;}
+T   :   F               {$$ = $1; dump_stacks(stateptr);}    
+    |   F T2MU          {$$ = $1 * $2; dump_stacks(stateptr);}
+    |   F T2DI          {$$ = $1 / $2; dump_stacks(stateptr);}
 ;
 
-T2MU  :   MULT T           {$$ = $2;}    
+T2MU  :   MULT T           {$$ = $2; dump_stacks(stateptr);}    
 ;
-T2DI  :   DIV T           { $$ = $2;}
+T2DI  :   DIV T           { $$ = $2; dump_stacks(stateptr);}
 ;
 
-F   : NUM            {$$ = $1;}
-    | MENOS NUM      {$$ = -1 * $2;}    
+F   : NUM            {$$ = $1; dump_stacks(stateptr);}
+    | MENOS NUM      {$$ = -1 * $2; dump_stacks(stateptr);}    
 ;
 
 %%
@@ -81,6 +81,8 @@ public Parser(Reader r) {
 
 /* Creacion del parser e inicializacion del reconocimiento */
 public static void main(String args[]) throws IOException {
+
+    System.out.println("Gramatica 2: ");
 
     Parser parser = new Parser(new FileReader(args[0]));
     parser.yyparse();

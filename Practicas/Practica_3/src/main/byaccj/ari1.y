@@ -18,7 +18,7 @@ GRAMATICA 1
 %%
 
 eval : E {$$ = $1; System.out.println("[OK] Resultado: "+ $$ );}
-    |       { System.out.println("[OK] ENTRADA VAC√çA ");}
+    |       { System.out.println("[OK] ENTRADA VAC√?A ");}
 ;
 
 E   :   T        {$$ = $1; dump_stacks(stateptr);}    
@@ -78,6 +78,8 @@ public Parser(Reader r) {
 /* Creacion del parser e inicializacion del reconocimiento */
 public static void main(String args[]) throws IOException {
 
+    System.out.println("Gramatica 1: ");
+
     Parser parser = new Parser(new FileReader(args[0]));
-    parser.yyparse();
+    parser.yyparse();    
 }
