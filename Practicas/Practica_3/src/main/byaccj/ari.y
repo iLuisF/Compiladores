@@ -9,40 +9,42 @@ import java.io.Reader;
 GRAMATICA 1
 */
 
-%token NUMBER
-%token NODO
-%token MAS MENOS
-%token MULT DIV
-%type <dval> E EMA EME T F
+%token <sval> MAS MENOS MULT DIV
+%token <dval> NUM
+%type <dval> E E2MA E2ME T T2MU T2DI F
 %type <dval> eval
+%type <sval> A
 
 %%
 
-eval : E {$$ = $1; System.out.println("[OK] "+ $$  );}
-    |       { System.out.println("[Ok Lista Vacia] ");}
+eval : E {$$ = $1; System.out.println("[OK] Resultado: "+ $$ );}
+    |       { System.out.println("[OK] ENTRADA VACÍA ");}
 ;
 
-E   :   T       
-    |   E MAS T     
-    |   E MAS E2 T
-    |   E MENOS T
-    |   E MENOS E2 T
+E   :   T        {$$ = $1; dump_stacks(stateptr);}    
+    |   E2MA T   { $$ = $1 + $2; dump_stacks(stateptr);}
+    |   E2ME T   { $$ = $1 - $2; dump_stacks(stateptr);}
 ;
 
-E2  :   E MAS E2
-    |   E MAS    
+E2MA  :   E MAS         { $$ = $1; dump_stacks(stateptr);}
 ;
 
+E2ME  :   E MENOS        { $$ = $1; dump_stacks(stateptr); }    
+;
 
-T   :   F
-    |   T MULT F
-    |   T MULT T2 F
+T   :   F               {$$ = $1; dump_stacks(stateptr);}    
+    |   T2MU F          {$$ = $1 * $2; dump_stacks(stateptr);}
+    |   T2DI F          {$$ = $1 / $2; dump_stacks(stateptr);}
+;
 
-T2  :   T MULT T2
-    |   T MULT
+T2MU  :   T MULT          {$$ = $1; dump_stacks(stateptr);}    
+;
+T2DI  :   T DIV           { $$ = $1; dump_stacks(stateptr);}
+;
 
-F   : NUMBER
-
+F   : NUM            {$$ = $1; dump_stacks(stateptr);}
+    | MENOS NUM      {$$ = -1 * $2; dump_stacks(stateptr);}    
+;
 
 %%
 
@@ -75,6 +77,7 @@ public Parser(Reader r) {
 
 /* Creacion del parser e inicializacion del reconocimiento */
 public static void main(String args[]) throws IOException {
+
     Parser parser = new Parser(new FileReader(args[0]));
     parser.yyparse();
 }

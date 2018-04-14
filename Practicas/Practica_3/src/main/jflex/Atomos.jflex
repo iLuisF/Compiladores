@@ -16,11 +16,9 @@ package asintactico;
 
 
 
-NUMBER      = [0-9][0-9]*
+NUMBER      = [0-9][0-9]* | [0-9][0-9]* \. [0-9]+
 
 %%
-
-a           { parser.yylval = new ParserVal(yytext()); return parser.NODO; }
 
 "+"         {parser.yyval = new ParserVal(yytext()); return Parser.MAS;}
 
@@ -30,8 +28,12 @@ a           { parser.yylval = new ParserVal(yytext()); return parser.NODO; }
 
 "/"         {parser.yylval = new ParserVal(yytext()); return Parser.DIV;}
 
-{NUMBER}    {parser.yylval = new ParserVal(new Double(yytext())); return Parser.NUMBER;}
+{NUMBER}    {
+            double d = Double.parseDouble(yytext());
+            parser.yylval = new ParserVal(d);
+            return Parser.NUM; }
 
 " "         {}
 
-.           { System.out.println("No reconocido ->" + yytext() + "<-"); }
+.           { System.err.println("[ERROR] Error de sintaxis");
+                System.exit(0); }
