@@ -7,9 +7,6 @@
 
 /* Gramática con recursión izquierda */
 %%
-input : atom  { System.out.println("[OK] ");}
-;
-
 atom: IDENTIFICADOR
     | ENTERO
     | REAL
