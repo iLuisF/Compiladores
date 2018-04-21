@@ -27,7 +27,11 @@ print_stmt: 'print' test
 
 compound_stmt: if_stmt
              | while_stmt
-if_stmt: 'if' test ':' suite ['else' ':' suite]
+
+//if_stmt: 'if' test ':' suite ['else' ':' suite]
+if_stmt: 'if' test ':' suite
+        | 'if' test ':' suite 'else' ':' suite
+
 while_stmt: 'while' test ':' suite
 suite: simple_stmt | SALTO INDENTA stmt+ DEINDENTA
 
@@ -84,8 +88,15 @@ term: factor
     | term '//' factor '%' factor
     | term '//' factor '//' factor
     
-factor: ('+'|'-') factor | power
-power: atom ['**' factor]
+//factor: ('+'|'-') factor | power
+factor: '+' factor
+    |   '-' factor
+    |   power
+
+//power: atom ['**' factor]
+power: atom
+    |  atom '**' factor
+
 atom: IDENTIFICADOR | ENTERO | CADENA
     | REAL | BOOLEANO | '(' test ')'
 
