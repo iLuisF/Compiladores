@@ -33,7 +33,13 @@ if_stmt: 'if' test ':' suite
         | 'if' test ':' suite 'else' ':' suite
 
 while_stmt: 'while' test ':' suite
-suite: simple_stmt | SALTO INDENTA stmt+ DEINDENTA
+
+//suite: simple_stmt | SALTO INDENTA stmt+ DEINDENTA
+suite: simple_stmt 
+    | SALTO INDENTA suit2 DEINDENTA
+
+suit2: stmt
+    | suit2 stmt
 
 test: or_test
 
