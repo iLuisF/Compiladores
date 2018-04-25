@@ -3,9 +3,9 @@
   import java.io.*;
 %}
 
-%token IDENTIFICADOR ENTERO REAL BOOLEANO ENDMARKER CADENA
+%token IDENTIFICADOR ENTERO REAL BOOLEANO ENDMARKER CADENA P_RESERVADA
 
-/* Gram醫ica con recursi髇 izquierda */
+/* Gram谩tica con recursi贸n izquierda */
 %%
 
 //file_input: (SALTO | stmt)* ENDMARKER
@@ -31,12 +31,12 @@ compound_stmt: if_stmt
              | while_stmt
 ;
 
-//if_stmt: 'if' test ':' suite ['else' ':' suite]
-if_stmt: 'if' test ':' suite
-        | 'if' test ':' suite 'else' ':' suite
+//if_stmt: 'IF' test ':' suite ['ELSE' ':' suite]
+if_stmt: 'IF' test ':' suite
+        | 'IF' test ':' suite 'ELSE' ':' suite
 ;
 
-while_stmt: 'while' test ':' suite
+while_stmt: 'WHILE' test ':' suite
 ;
 //suite: simple_stmt | SALTO INDENTA stmt+ DEINDENTA
 suite: simple_stmt 
@@ -124,7 +124,7 @@ atom: IDENTIFICADOR | ENTERO | CADENA
 ;
 
 %%
-/* Referencia a analizador l閤ico */
+/* Referencia a analizador l茅xico */
 private Flexer lexer;
 
 private int yylex () {
@@ -138,7 +138,7 @@ private int yylex () {
     return yyl_return;
 }
 
-/* Funci髇 para reportar error */
+/* Funci贸n para reportar error */
 public void yyerror (String error) {
     System.err.println ("[ERROR]  " + error);
     System.exit(1);
@@ -149,7 +149,7 @@ public Parser(Reader r) {
     lexer = new Flexer(r, this);
 }
 
-/* Creaci髇 del parser e inicializaci髇 del reconocimiento */
+/* Creaci贸n del parser e inicializaci贸n del reconocimiento */
 public static void main(String args[]) throws IOException {
     Parser parser = new Parser(new FileReader("src/main/resources/test.txt"));
     parser.yydebug = true;

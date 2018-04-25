@@ -26,7 +26,7 @@ import java.io.IOException;
     public String cadenaActual;
 
     /**
-     * Regresa por cada linea el nivel de identación y deindentación.
+     * Regresa por cada linea el nivel de identaciÃ³n y deindentaciÃ³n.
      */
 
     public String generaIndent(int size) {
@@ -143,7 +143,7 @@ ESPACIO         =       " "
                        System.out.print("\nError de cadena: "+ cadenaActual +", linea:" + yyline);
                        System.exit(0);
                        }else{ 
-                            return Parser.CADENA
+                            return Parser.CADENA;
                        }
                     }
 {OPERADOR}          { System.out.print("OPERADOR(" + yytext() + ")");}
