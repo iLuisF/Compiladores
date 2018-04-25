@@ -3,8 +3,9 @@
   import java.io.*;
 %}
 
-%token IDENTIFICADOR ENTERO REAL BOOLEANO ENDMARKER CADENA P_RESERVADA
-
+%token IDENTIFICADOR ENTERO REAL BOOLEANO ENDMARKER CADENA P_RESERVADA PI PD MAS
+%token ESPACIO MENOS MULT DIV POT CMNT MOD MENQ MAYQ MAYIQ MENIQ IGUAL DIF EXIGUAL
+%token AND OR NOT FOR WHILE IF ELSE ELIF PRINT PNTS
 /* Gramática con recursión izquierda */
 %%
 
@@ -22,9 +23,9 @@ simple_stmt: small_stmt SALTO
 ;
 small_stmt: expr_stmt | print_stmt
 ;
-expr_stmt: test '=' test
+expr_stmt: test IGUAL test
 ;
-print_stmt: 'print' test
+print_stmt: PRINT test
 ;
 
 compound_stmt: if_stmt
@@ -32,11 +33,11 @@ compound_stmt: if_stmt
 ;
 
 //if_stmt: 'IF' test ':' suite ['ELSE' ':' suite]
-if_stmt: 'IF' test ':' suite
-        | 'IF' test ':' suite 'ELSE' ':' suite
+if_stmt: IF test PNTS suite
+        | IF test PNTS suite ELSE PNTS suite
 ;
 
-while_stmt: 'WHILE' test ':' suite
+while_stmt: WHILE test PNTS suite
 ;
 //suite: simple_stmt | SALTO INDENTA stmt+ DEINDENTA
 suite: simple_stmt 
@@ -52,17 +53,17 @@ test: or_test
 
 //or_test: and_test ('or' and_test)*
 or_test: and_test
-       | and_test 'or' and_test
-       | or_test 'or' and_test 'or' and_test
+       | and_test OR and_test
+       | or_test OR and_test OR and_test
 ;
 
 //and_test: not_test ('and' not_test)*
 and_test: not_test
-       |  not_test 'and' not_test
-       |  and_test 'and' not_test 'and' not_test
+       |  not_test AND not_test
+       |  and_test AND not_test AND not_test
 ;
 
-not_test: 'not' not_test | comparison
+not_test: NOT not_test | comparison
 ;
 
 //comparison: expr (comp_op expr)*
@@ -71,56 +72,56 @@ comparison: expr
        |    comparison comp_op expr comp_op expr
 ;
 
-comp_op: '<'|'>'|'=='|'>='|'<='|'!='
+comp_op: MENQ | MAYQ | EXIGUAL | MAYIQ | MENIQ | DIF
 ;
 
 //expr: term (('+'|'-') term)*
 expr: term
-    | term '+' term
-    | term '-' term
-    | expr '+' term '+' term
-    | expr '-' term '-' term
-    | expr '-' term '+' term
-    | expr '+' term '-' term
+    | term MAS term
+    | term MENOS term
+    | expr MAS term MAS term
+    | expr MENOS term MENOS term
+    | expr MENOS term MAS term
+    | expr MAS term MENOS term
 ;
 
-//term: factor (('*'|'/'|'%'|'//') factor)*
+//term: factor ((MULT|DIV|MOD|CMNT) factor)*
 term: factor
-    | factor '*' factor
-    | factor '/' factor
-    | factor '%' factor
-    | factor '//' factor
-    | term '*' factor '*' factor
-    | term '*' factor '/' factor
-    | term '*' factor '%' factor
-    | term '*' factor '//' factor
-    | term '/' factor '*' factor
-    | term '/' factor '/' factor
-    | term '/' factor '%' factor
-    | term '/' factor '//' factor
-    | term '%' factor '*' factor
-    | term '%' factor '/' factor
-    | term '%' factor '%' factor
-    | term '%' factor '//' factor
-    | term '//' factor '*' factor
-    | term '//' factor '/' factor
-    | term '//' factor '%' factor
-    | term '//' factor '//' factor
+    | factor MULT factor
+    | factor DIV factor
+    | factor MOD factor
+    | factor CMNT factor
+    | term MULT factor MULT factor
+    | term MULT factor DIV factor
+    | term MULT factor MOD factor
+    | term MULT factor CMNT factor
+    | term DIV factor MULT factor
+    | term DIV factor DIV factor
+    | term DIV factor MOD factor
+    | term DIV factor CMNT factor
+    | term MOD factor MULT factor
+    | term MOD factor DIV factor
+    | term MOD factor MOD factor
+    | term MOD factor CMNT factor
+    | term CMNT factor MULT factor
+    | term CMNT factor DIV factor
+    | term CMNT factor MOD factor
+    | term CMNT factor CMNT factor
 ;
     
 //factor: ('+'|'-') factor | power
-factor: '+' factor
-    |   '-' factor
+factor: MAS factor
+    |   MENOS factor
     |   power
 ;
 
 //power: atom ['**' factor]
 power: atom
-    |  atom '**' factor
+    |  atom POT factor
 ;
 
 atom: IDENTIFICADOR | ENTERO | CADENA
-    | REAL | BOOLEANO | '(' test ')'
+    | REAL | BOOLEANO | PI test PD
 ;
 
 %%

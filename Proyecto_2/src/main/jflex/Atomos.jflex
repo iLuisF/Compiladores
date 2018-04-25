@@ -1,14 +1,17 @@
+/********************************************************************************
+**  @author Diana Montes con modificaciones de KAAB                            **
+*********************************************************************************/
+
 package asintactico;
 import java.util.Stack;
-import java.util.Arrays;
-import java.io.FileWriter;
-import java.io.IOException;
 %%
 %public
 %class Flexer
 %debug
 %byaccj
 %line
+%standalone
+%state INDENTA CADENA CODIGO
 %unicode
 
 %{
@@ -19,143 +22,146 @@ import java.io.IOException;
     	   yyparser = parser;
     }
 
-    public FileWriter fw;
-    public int tabLen;
-    public Stack<Integer> pila = new Stack<Integer>();
-    public int espacios = 0;
-    public String cadenaActual;
-
-    /**
-     * Regresa por cada linea el nivel de identación y deindentación.
-     */
-
-    public String generaIndent(int size) {
-        String v = "INDENTA(" + size  + ")";
-        try{
-            fw.write(v);
-        }catch(IOException e){
-            System.out.println("ERROR CON EL ARCHIVO");
-            e.printStackTrace();
+    /* Acumula todos los átomos de DEINDENTA que deben ser devueltos  */
+    static String dedents = "";
+    /* Estructura auxiliar para almacenar los bloques de indentación */
+    static Stack<Integer> pila = new Stack<Integer>();
+    /* Guarda el nivel actual de indentación */
+    static Integer actual = 0;
+    /** Función que maneja los niveles de indetación e imprime
+    * átomos INDENTA y DEINDENTA.
+    * @param int espacios - nivel de indetación actual.
+    * @return boolean - true en caso que no haya errores léxicos,
+    * 	      	      	 false en otro caso.
+    */
+    public static boolean indentacion(int espacios){
+        if(pila.empty()){ //ponerle un cero a la pila si esta vacia
+             pila.push(new Integer(0));
         }
-        return v;
-    }
 
-    public String generaDeindent(int size) {
-        String v = "DEINDENTA(" + size  + ")";
-        try{
-            fw.write(v);
-        }catch(IOException e){
-            System.out.println("ERROR CON EL ARCHIVO");
-            e.printStackTrace();
-        }
-        return v;
-    }
+        Integer tope = pila.peek();
 
-    public String getIndentaDeindenta() throws IOException{
-
-        if(tabLen == 0 && pila.empty()){  // Verifica si la pila esta vacia para detectar el primer bloque a poner
-            pila.push(tabLen);
-
-        }else{ // Si la pila ya tiene al menos un elemento
-            // Caso 1:
-            // Verifica si la nueva identacion es mayor al ultimo elemento insertado
-            if(pila.peek() < tabLen){
-                // Es una longitud correcta del nuevo bloque
-                pila.push(tabLen);
-            }    
-            // Caso 2:
-            // Verifica si la nueva identacion es menor al ultimo elemento insertado
-            else if( pila.peek() > tabLen){
-                String tokens = "";
-                // Se va sacando un bloque y generando un token hasta que empaten
-                while( pila.peek() != tabLen ){
-                    if( tabLen > pila.peek() ){
-                        //throw error
-                        System.out.println("\nError identacion, linea "+ yyline);
-                        fw.write("\nError identacion, linea "+ yyline);
-                        fw.flush();
-                        fw.close();
-                        System.exit(0);
-                        break;
-                        
-                    }
-                    tokens += generaDeindent(pila.pop());
+        if(tope != espacios){
+	    //Se debe emitir un DEDENT por cada nivel mayor al actual
+            if(tope > espacios){
+                while(pila.peek() > espacios &&  pila.peek()!=0 ){
+                    dedents += "DEINDENTA("+pila.pop()+")\n";
                 }
-                return tokens;
+                if(pila.peek() == espacios){
+                    System.out.print(dedents);
+                    dedents = "";
+                    return true;
+                }
+                return false;
             }
-            // Caso 3:
-            // Verifica si la nueva identacion es migual al ultimo elemento insertado
-            else if( pila.peek() == tabLen ){
-                //Se trata del mismo bloque, no hay que producir nada
-                return "";
-            }
+   	    //El nivel actual de indentación es mayor a los anteriores.
+            pila.push(espacios);
+            System.out.println("INDENTA("+actual+")");
+            return true;
         }
-        return generaIndent(tabLen);
+	//El nivel actual es igual al anterior.
+        return true;
     }
 %}
-
-%class Flexer
-%public
-%standalone
-%unicode
-%line
-%x CONTEXTO
-
-%eof{
-    while( pila.peek() != 0 ){
-        System.out.println(generaDeindent(pila.pop()));
-    }
-%eof}
-
-BOOLEANO        =       True | False
-
-ENTERO          =       [1-9][0-9]* | 0+
-
-REAL            =       \.[0-9]+ | {ENTERO}\.[0-9]+ | {ENTERO}\.
-
-CADENA          =       "\"" [^\\"\""]* "\""
-
-P_RESERVADA     =       and | or | not | for | while | if | else | elif | print
-
-IDENTIFICADOR   =       ([:letter:] | _ ) ([:jletter:] | [:digit:] | _ )*
-
-OPERADOR        =       \+ | \- | \* | \*\* | \/ | \/\/ | \% | \< | \> | \>\= 
-                        | \<\= | \= | \! | \=\=
-
-SEPARADOR       =       \:
-
-TABULADOR       =       "\t"
-
-ESPACIO         =       " "
+PUNTO			=	\.
+DIGIT           	=       [0-9]
+CERO             	=        0+
+ENTERO			= 	{CERO} | {DIGIT}+
+REAL			= 	{ENTERO}? {PUNTO} {ENTERO} | {ENTERO} {PUNTO} {ENTERO}?
+P_AND                   =       and
+P_NOT                   =       not
+P_WH                    =       while
+P_FOR                   =       for
+P_ELI                   =       elif
+P_OR                    =       or
+P_ELS                   =       else
+P_IF                    =       if
+P_PNT                   =       print
+OP_MAS                  =       \+
+OP_MENOS                =       \-
+OP_MULT                 =       \*
+OP_POT                  =       \*\*
+OP_DIV                  =       \/
+OP_CMNT                 =       \/\/
+OP_MOD                  =       \%
+OP_MENQ                 =       \<
+OP_MAYQ                 =       \>
+OP_MAYIQ                =       \>\=
+OP_MENIQ                =       \<\=
+OP_IGUAL                =       \=
+OP_DIF                  =       \!=
+OP_EXIGUAL              =       \=\=
+OP_2PNTS                =       \:
+OPERADOR  		=       ("+" | "-" | "*" | "**" | "/" | "//" | "%" |
+			         "<" | ">" | "<=" | "+=" | "-=" | ">=" | "==" | "!=" | "<>" | "=" )
+SEPARADOR  		=       ("(" | ")" | ":" | ";" )
+SALTO          	        =        "\n"
+IDENTIFICADOR       	= 	([:letter:] | "_" )([:letter:] | "_" | [0-9])*
+ESC              	= 	(\\)
+CHAR_LITERAL   	        = 	([:letter:] | [:digit:] | "_" | "$" | " " | "#" | {OPERADOR} | {SEPARADOR}) | "\\"
+COMENTARIO 		=     	"#".*{SALTO}
+BOOLEANO		=	("True" | "False")
 
 %%
-"("                 {}
-")"                 {}
-{ESPACIO}           {}
-[\n]                {}
-{P_RESERVADA}       { return Parser.P_RESERVADA;}
-{IDENTIFICADOR}     { return Parser.IDENTIFICADOR; }
-{BOOLEANO}          { return Parser.BOOLEANO;}
-{ENTERO}            { return Parser.ENTERO;}
-{REAL}              { return Parser.REAL;}
-{CADENA}            { cadenaActual = yytext();
-                      if(cadenaActual.contains("\\") || cadenaActual.substring(1, cadenaActual.length()-1).contains("\"")){
-                       System.out.print("\nError de cadena: "+ cadenaActual +", linea:" + yyline);
-                       System.exit(0);
-                       }else{ 
-                            return Parser.CADENA;
-                       }
-                    }
-{OPERADOR}          { System.out.print("OPERADOR(" + yytext() + ")");}
-{SEPARADOR}         { System.out.print("SEPARADOR(" + yytext() + ")");}
-.                   { System.out.print("\nError, lexema no identificado, linea:" + yyline); 
-                    System.exit(0);}
 
-<CONTEXTO>{
-    {ESPACIO}      {this.espacios++; }
-    {TABULADOR}    {this.espacios+=4;}
-    . {yypushback(1); tabLen = this.espacios; System.out.println( getIndentaDeindenta()); yybegin(YYINITIAL);}
-    
+
+{COMENTARIO}      			{}
+<CADENA>{
+  {CHAR_LITERAL}*\"			{ yybegin(CODIGO);  return Parser.CADENA;}
+  {SALTO}				{ System.out.println("Cadena mal construida, linea " + (yyline+1) ); System.exit(1);}
+}
+<YYINITIAL>{
+  " "+                        		{ System.out.println("Error de indentación. Línea " + (yyline+1) ); System.exit(1);}
+  .                               	{ yypushback(1); yybegin(CODIGO);}
+}
+<CODIGO>{
+  \"					 { yybegin(CADENA); }
+  {ENTERO}				 { return Parser.ENTERO; }
+  {REAL}     				 { return Parser.REAL; }
+  {OP_MAS}                               { return Parser.MAS; }
+  {OP_MENOS}                             { return Parser.MENOS; } 
+  {OP_MULT}                              { return Parser.MULT; }
+  {OP_POT}                               { return Parser.POT; }
+  {OP_DIV}                               { return Parser.DIV; }
+  {OP_CMNT}                              { return Parser.CMNT; }
+  {OP_MOD}                               { return Parser.MOD; }
+  {OP_MENQ}                              { return Parser.MENQ; }
+  {OP_MAYQ}                              { return Parser.MAYQ; }
+  {OP_MAYIQ}                             { return Parser.MAYIQ; }
+  {OP_MENIQ}                             { return Parser.MENIQ; }
+  {OP_IGUAL}                             { return Parser.IGUAL; }
+  {OP_DIF}                               { return Parser.DIF; }
+  {OP_EXIGUAL}                           { return Parser.EXIGUAL; }
+  {OP_2PNTS}                             { return Parser.PNTS; }
+  "("                                    { return Parser.PI;}
+  ")"                                    { return Parser.PD;}
+  {P_AND}                                { return Parser.AND; }
+  {P_OR}                                 { return Parser.OR; }
+  {P_NOT}                                { return Parser.NOT; }
+  {P_FOR}                                { return Parser.FOR; }
+  {P_WH}                                 { return Parser.WHILE; }
+  {P_IF}                                 { return Parser.IF; }
+  {P_ELS}                                { return Parser.ELSE; }
+  {P_ELI}                                { return Parser.ELIF; }
+  {P_PNT}                                { return Parser.PRINT; }
+  {BOOLEANO}                 	 	 { return Parser.BOOLEANO; }
+  {IDENTIFICADOR}           		 { return Parser.IDENTIFICADOR; }
+  {SALTO}                 		 { yybegin(INDENTA); actual=0; System.out.print("SALTO"+yytext()); }
+  " "                        		 {   }
 }
 
-. { }
+<INDENTA>{
+  {SALTO}				{ actual = 0;}
+  " "                            	{ actual++;}
+  \t                             	{ actual += 4;}
+  .                               	{ yypushback(1);
+                                          if(!indentacion(actual)){
+                                                System.out.println("Error de indentacion, linea "+(yyline+1));
+                                                System.exit(1);
+                                          }
+					  yybegin(CODIGO);
+					}
+}
+<<EOF>>                                 {indentacion(0); System.exit(0);}
+[^]					{ System.out.println("Error de sintáxis: caractér inválido: " + yytext() + "\nLínea "+(yyline+1));
+					  System.exit(1); }
