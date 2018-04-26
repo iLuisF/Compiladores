@@ -53,14 +53,20 @@ test: or_test
 
 //or_test: and_test ('or' and_test)*
 or_test: and_test
-       | and_test OR and_test
-       | or_test OR and_test OR and_test
+        | and_test or_test2
+;
+
+or_test2: OR or_test
+
 ;
 
 //and_test: not_test ('and' not_test)*
 and_test: not_test
-       |  not_test AND not_test
-       |  and_test AND not_test AND not_test
+       |  not_test and_test2
+;
+
+and_test2: AND and_test
+
 ;
 
 not_test: NOT not_test | comparison
@@ -72,7 +78,7 @@ comparison: expr
 
 ;
 
-comparison2: comp_op expr comparison2
+comparison2: comp_op comparison
 
 ;
 
