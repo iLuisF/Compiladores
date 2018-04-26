@@ -6,7 +6,7 @@
 %token IDENTIFICADOR ENTERO REAL BOOLEANO ENDMARKER CADENA P_RESERVADA PI PD MAS
 %token ESPACIO MENOS MULT DIV POT CMNT MOD MENQ MAYQ MAYIQ MENIQ IGUAL DIF EXIGUAL
 %token AND OR NOT FOR WHILE IF ELSE ELIF PRINT PNTS
-/* Gramática con recursión izquierda */
+/* GramÃ¡tica con recursiÃ³n izquierda */
 %%
 
 //file_input: (SALTO | stmt)* ENDMARKER
@@ -68,45 +68,29 @@ not_test: NOT not_test | comparison
 
 //comparison: expr (comp_op expr)*
 comparison: expr
-       |    expr comp_op expr
-       |    comparison comp_op expr comp_op expr
+        |   expr comparison2
+
+;
+
+comparison2: comp_op expr comparison2
+
 ;
 
 comp_op: MENQ | MAYQ | EXIGUAL | MAYIQ | MENIQ | DIF
 ;
 
 //expr: term (('+'|'-') term)*
-expr: term
-    | term MAS term
-    | term MENOS term
-    | expr MAS term MAS term
-    | expr MENOS term MENOS term
-    | expr MENOS term MAS term
-    | expr MAS term MENOS term
+expr : term
+    |  term expr2
+;
+expr2 : MAS expr
+    |   MENOS expr
 ;
 
 //term: factor ((MULT|DIV|MOD|CMNT) factor)*
-term: factor
-    | factor MULT factor
-    | factor DIV factor
-    | factor MOD factor
-    | factor CMNT factor
-    | term MULT factor MULT factor
-    | term MULT factor DIV factor
-    | term MULT factor MOD factor
-    | term MULT factor CMNT factor
-    | term DIV factor MULT factor
-    | term DIV factor DIV factor
-    | term DIV factor MOD factor
-    | term DIV factor CMNT factor
-    | term MOD factor MULT factor
-    | term MOD factor DIV factor
-    | term MOD factor MOD factor
-    | term MOD factor CMNT factor
-    | term CMNT factor MULT factor
-    | term CMNT factor DIV factor
-    | term CMNT factor MOD factor
-    | term CMNT factor CMNT factor
+term: factor | factor term2
+;
+term2: MULT term|DIV term|MOD term|CMNT term
 ;
     
 //factor: ('+'|'-') factor | power
@@ -125,7 +109,7 @@ atom: IDENTIFICADOR | ENTERO | CADENA
 ;
 
 %%
-/* Referencia a analizador léxico */
+/* Referencia a analizador lÃ©xico */
 private Flexer lexer;
 
 private int yylex () {
@@ -139,7 +123,7 @@ private int yylex () {
     return yyl_return;
 }
 
-/* Función para reportar error */
+/* FunciÃ³n para reportar error */
 public void yyerror (String error) {
     System.err.println ("[ERROR]  " + error);
     System.exit(1);
@@ -150,7 +134,7 @@ public Parser(Reader r) {
     lexer = new Flexer(r, this);
 }
 
-/* Creación del parser e inicialización del reconocimiento */
+/* CreaciÃ³n del parser e inicializaciÃ³n del reconocimiento */
 public static void main(String args[]) throws IOException {
     Parser parser = new Parser(new FileReader("src/main/resources/test.txt"));
     parser.yydebug = true;
