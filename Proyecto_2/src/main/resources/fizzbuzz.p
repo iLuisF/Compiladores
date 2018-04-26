@@ -13,5 +13,5 @@ while indice < 31:
    if otro:
       print indice
 
-   print "\n"
+   print "hola papu n"
    indice = indice + 1

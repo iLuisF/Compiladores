@@ -6,15 +6,14 @@
 %token IDENTIFICADOR ENTERO REAL BOOLEANO ENDMARKER CADENA P_RESERVADA PI PD MAS
 %token ESPACIO MENOS MULT DIV POT CMNT MOD MENQ MAYQ MAYIQ MENIQ IGUAL DIF EXIGUAL
 %token AND OR NOT FOR WHILE IF ELSE ELIF PRINT PNTS
-/* GramÃ¡tica con recursiÃ³n izquierda */
+/* Gramatica con recursion izquierda */
 %%
 
-//file_input: (SALTO | stmt)* ENDMARKER
+//file_input: (SALTO | stmt)*
 file_input: SALTO
         | stmt
-        | ENDMARKER
-        | file_input SALTO ENDMARKER
-        | file_input stmt ENDMARKER
+        | file_input SALTO
+        | file_input stmt
 ;
 
 stmt: simple_stmt | compound_stmt
@@ -53,14 +52,20 @@ test: or_test
 
 //or_test: and_test ('or' and_test)*
 or_test: and_test
-       | and_test OR and_test
-       | or_test OR and_test OR and_test
+        | and_test or_test2
+;
+
+or_test2: OR or_test
+
 ;
 
 //and_test: not_test ('and' not_test)*
 and_test: not_test
-       |  not_test AND not_test
-       |  and_test AND not_test AND not_test
+       |  not_test and_test2
+;
+
+and_test2: AND and_test
+
 ;
 
 not_test: NOT not_test | comparison
@@ -72,7 +77,7 @@ comparison: expr
 
 ;
 
-comparison2: comp_op expr comparison2
+comparison2: comp_op comparison
 
 ;
 
@@ -111,7 +116,6 @@ atom: IDENTIFICADOR | ENTERO | CADENA
 %%
 /* Referencia a analizador lÃ©xico */
 private Flexer lexer;
-
 private int yylex () {
     int yyl_return = -1;
     try {
@@ -122,21 +126,18 @@ private int yylex () {
     }
     return yyl_return;
 }
-
-/* FunciÃ³n para reportar error */
+/* Funcion para reportar error */
 public void yyerror (String error) {
     System.err.println ("[ERROR]  " + error);
     System.exit(1);
 }
-
 /* Constructor */
 public Parser(Reader r) {
     lexer = new Flexer(r, this);
 }
-
-/* CreaciÃ³n del parser e inicializaciÃ³n del reconocimiento */
+/* Creacion del parser e inicializacion del reconocimiento */
 public static void main(String args[]) throws IOException {
-    Parser parser = new Parser(new FileReader("src/main/resources/test.txt"));
+    Parser parser = new Parser(new FileReader("src/main/resources/fizzbuzz.p"));
     parser.yydebug = true;
     parser.yyparse();
 }
