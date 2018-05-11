@@ -3,7 +3,7 @@
   import java.lang.Math;
   import java.io.*;
 %}
-/* Átomos del lenguaje */
+/* �?tomos del lenguaje */
 %token CADENA
 %token SALTO IDENTIFICADOR ENTERO REAL
 %token BOOLEANO DEINDENTA INDENTA
@@ -17,8 +17,8 @@
 /* Producciones */
 %%
 /*    input: (SALTO | stmt)* ENDMARKER */
-input:      {raíz = $$; System.out.println("Reconocimiento Exitoso");}
-     | aux0 {raíz = $1; System.out.println("Reconocimiento Exitoso");}
+input:      {raiz = $$; System.out.println("Reconocimiento Exitoso");}
+     | aux0 {raiz = $1; System.out.println("Reconocimiento Exitoso");}
 ;
 
 /*    aux0: (SALTO | stmt)+ */
@@ -34,8 +34,8 @@ stmt: simple_stmt {$$ = $1;}
 ;
 
 /* compound_stmt: if_stmt | while_stmt */
-compound_stmt: if_stmt {}
-             | while_stmt {}
+compound_stmt: if_stmt {$$ = $1;}
+             | while_stmt {$$ = $1;}
 ;
 
 /* if_stmt: 'if' test ':' suite ['else' ':' suite] */
@@ -63,12 +63,12 @@ simple_stmt: small_stmt SALTO {$$ = $1;}
 
 /* small_stmt: expr_stmt | print_stmt  */
 small_stmt: expr_stmt {$$ = $1;}
-          | print_stmt {}
+          | print_stmt {$$ = $1;}
 ;
 
 /* expr_stmt: test ['=' test] */
 expr_stmt: test {$$ = $1;}
-         | test EQ test {}
+         | test EQ test {$$ = $1;}
 ;
 
 /* print_stmt: 'print' test  */
@@ -81,21 +81,21 @@ test: or_test {$$ = $1;}
 
 /*    or_test: (and_test 'or')* and_test  */
 or_test: and_test {$$ = $1;}
-       | aux2 and_test {}
+       | aux2 and_test {$$ = $1;}
 ;
 /*    aux2: (and_test 'or')+  */
 aux2: and_test OR {}
-    | aux2 and_test OR {}
+    | aux2 and_test OR {$$ = $1;}
 ;
 
 /*    and_expr: (not_test 'and')* not_test */
 and_test: not_test {$$ = $1;}
-        | aux7 not_test {}
+        | aux7 not_test {$$ = $1;}
 ;
 
 /*    and_expr: (not_test 'and')+ */
 aux7: not_test AND {}
-    | aux7 not_test AND {}
+    | aux7 not_test AND {$$ = $1;}
 ;
 
 /*    not_test: 'not' not_test | comparison */
@@ -105,12 +105,12 @@ not_test: NOT not_test {}
 
 /*    comparison: (expr comp_op)* expr  */
 comparison: expr {$$ = $1;}
-          | aux4 expr {}
+          | aux4 expr {$$ = $1;}
 ;
 
 /*    aux4: (expr comp_op)+  */
-aux4: expr comp_op {}
-    | aux4 expr comp_op {}
+aux4: expr comp_op {$$ = $2;}
+    | aux4 expr comp_op {$$ = $1;}
 ;
 
 /*    comp_op: '<'|'>'|'=='|'>='|'<='|'!=' */
@@ -134,7 +134,7 @@ aux8: term MAS {$$ = new AddNodo($1,null);}
 
 /*   term: (factor ('*'|'/'|'%'|'//'))* factor   */
 term: factor {$$ = $1;}
-    | aux9 factor {}
+    | aux9 factor {$$ = $1; $$.agregaHijoFinal($2);}
 ;
 aux9: factor POR {}
     | factor DIVENTERA {}
@@ -146,8 +146,8 @@ aux9: factor POR {}
     | aux9 factor DIV {}
 ;
 /* factor: ('+'|'-') factor | power */
-factor: MAS factor {}
-      | MENOS factor {}
+factor: MAS factor {$$ = new AddNodo($1,null);}
+      | MENOS factor {$$ = new DifNodo($1,null);}
       | power {$$ = $1;}
 ;
 /* power: atom ['**' factor] */
@@ -158,15 +158,15 @@ power:  atom {$$ = $1;}
 /* atom: IDENTIFICADOR | ENTERO | CADENA | REAL | BOOLEANO | '(' test ')' */
 atom:  IDENTIFICADOR {$$ = $1;}
      | ENTERO {$$ = $1;}
-     | CADENA {}
-     | REAL {}
-     | BOOLEANO {}
-     | PA test PC {}
+     | CADENA {$$ = $1;}
+     | REAL {$$ = $1;}
+     | BOOLEANO {$$ = $1;}
+     | PA test PC {$$ = $2;}
 ;
 %%
 private Flexer lexer;
 /* Nodo Raiz del AST */
-public Nodo raíz;
+public Nodo raiz;
 
 /* Comunicación con el analizador léxico */
 private int yylex () {
