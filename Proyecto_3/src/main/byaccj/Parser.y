@@ -44,7 +44,7 @@ if_stmt:  IF test DOBLEPUNTO suite ELSE DOBLEPUNTO suite {}
 ;
 
 /*    while_stmt: 'while' test ':' suite */
-while_stmt: WHILE test DOBLEPUNTO suite {}
+while_stmt: WHILE test DOBLEPUNTO suite {$$ = new WhileNodoBinario($2, $4);}
 ;
 
 /*    suite: simple_stmt | SALTO INDENTA stmt+ DEINDENTA */
@@ -68,11 +68,11 @@ small_stmt: expr_stmt {$$ = $1;}
 
 /* expr_stmt: test ['=' test] */
 expr_stmt: test {$$ = $1;}
-         | test EQ test {$$ = $1;}
+         | test EQ test {$$ = new AsigNodo($1, $3);}
 ;
 
 /* print_stmt: 'print' test  */
-print_stmt: PRINT test {}
+print_stmt: PRINT test {$$ = new PrintNodo($2);}
 ;
 
 /*   test: or_test */
@@ -81,36 +81,36 @@ test: or_test {$$ = $1;}
 
 /*    or_test: (and_test 'or')* and_test  */
 or_test: and_test {$$ = $1;}
-       | aux2 and_test {$$ = $1;}
+       | aux2 and_test {$$ = $1; $$.agregaHijoFinal($2);}
 ;
 /*    aux2: (and_test 'or')+  */
-aux2: and_test OR {}
-    | aux2 and_test OR {$$ = $1;}
+aux2: and_test OR {$$ = new OrNodo($1);}
+    | aux2 and_test OR {$$ = $1; $3.agregaHijoPrincipio($2); $$.agregaHijoFinal($3);}
 ;
 
 /*    and_expr: (not_test 'and')* not_test */
 and_test: not_test {$$ = $1;}
-        | aux7 not_test {$$ = $1;}
+        | aux7 not_test {$$ = $1; $$.agregaHijoFinal($2)}
 ;
 
 /*    and_expr: (not_test 'and')+ */
-aux7: not_test AND {}
-    | aux7 not_test AND {$$ = $1;}
+aux7: not_test AND {$$ = new AndNodo($1);}
+    | aux7 not_test AND {$$ = $1; $3.agregaHijoPrincipio($2); $$.agregaHijoFinal($3);}
 ;
 
 /*    not_test: 'not' not_test | comparison */
-not_test: NOT not_test {}
+not_test: NOT not_test {$$ = new NotNodo($2);}
         | comparison {$$ = $1;}
 ;
 
 /*    comparison: (expr comp_op)* expr  */
 comparison: expr {$$ = $1;}
-          | aux4 expr {$$ = $1;}
+          | aux4 expr {$$ = $1; $$.agregaHijoFinal($2);}
 ;
 
 /*    aux4: (expr comp_op)+  */
-aux4: expr comp_op {$$ = $2;}
-    | aux4 expr comp_op {$$ = $1;}
+aux4: expr comp_op {$$ = $2; $$.agregaHijoPrincipio($1);}
+    | aux4 expr comp_op {$$ = $1; $3.agregaHijoPrincipio($2); $$.agregaHijoFinal($3);}
 ;
 
 /*    comp_op: '<'|'>'|'=='|'>='|'<='|'!=' */
