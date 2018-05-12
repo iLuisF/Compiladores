@@ -72,7 +72,7 @@ expr_stmt: test {$$ = $1;}
 ;
 
 /* print_stmt: 'print' test  */
-print_stmt: PRINT test {$$ = new PrintNodo($2);}
+print_stmt: PRINT test {$$ = new PrintNodoBinario($2, null);}
 ;
 
 /*   test: or_test */
@@ -84,7 +84,7 @@ or_test: and_test {$$ = $1;}
        | aux2 and_test {$$ = $1; $$.agregaHijoFinal($2);}
 ;
 /*    aux2: (and_test 'or')+  */
-aux2: and_test OR {$$ = new OrNodo($1);}
+aux2: and_test OR {$$ = new OrNodoBinario($1, null);}
     | aux2 and_test OR {$$ = $1; $3.agregaHijoPrincipio($2); $$.agregaHijoFinal($3);}
 ;
 
@@ -94,7 +94,7 @@ and_test: not_test {$$ = $1;}
 ;
 
 /*    and_expr: (not_test 'and')+ */
-aux7: not_test AND {$$ = new AndNodo($1);}
+aux7: not_test AND {$$ = new AndNodoBinario($1, null);}
     | aux7 not_test AND {$$ = $1; $3.agregaHijoPrincipio($2); $$.agregaHijoFinal($3);}
 ;
 
