@@ -29,4 +29,7 @@ public interface Visitor
     public void visit(PotenciaNodoBinario n);
     public void visit(PrintNodoBinario n);    
     public void visit(WhileNodoBinario n);
+    public void visit(BooleanoHoja n);
+    public void visit(CadenaHoja n);
+    public void visit(RealHoja n);
 }

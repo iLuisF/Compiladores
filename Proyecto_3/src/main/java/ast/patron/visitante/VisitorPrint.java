@@ -200,10 +200,35 @@ public class VisitorPrint implements Visitor
     }
 
     public void visit(PrintNodoBinario n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("[Print]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
     }
 
     public void visit(WhileNodoBinario n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("[while]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
     }
+
+    public void visit(BooleanoHoja n) {
+        System.out.print("[BooleanoHoja]: " + n.getValor().bval);
+    }
+
+    public void visit(CadenaHoja n) {
+        System.out.print("[CadenaHoja]: " + n.getValor().sval);
+    }
+
+    public void visit(RealHoja n) {
+        System.out.print("[RealHoja]: " + n.getValor().dval);
+    }
+        
 }

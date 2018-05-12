@@ -3,7 +3,7 @@
   import java.lang.Math;
   import java.io.*;
 %}
-/* Ã?tomos del lenguaje */
+/* Atomos del lenguaje */
 %token CADENA
 %token SALTO IDENTIFICADOR ENTERO REAL
 %token BOOLEANO DEINDENTA INDENTA
@@ -30,7 +30,7 @@ aux0: SALTO
 
 /*    stmt: simple_stmt | compound_stmt*/
 stmt: simple_stmt {$$ = $1;}
-    | compound_stmt {}
+    | compound_stmt {$$ = $1;}
 ;
 
 /* compound_stmt: if_stmt | while_stmt */
