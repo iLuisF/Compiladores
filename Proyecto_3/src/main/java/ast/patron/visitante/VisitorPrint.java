@@ -42,7 +42,7 @@ public class VisitorPrint implements Visitor
         n.getUltimoHijo().accept(this);
     }
     public void visit(Hoja n){
-
+        System.out.print("[Hoja]: "+ n.toString());
     }
     public void visit(IdentifierHoja n){
 	System.out.print("[Hoja Identificador] id: "+ n.getNombre());
@@ -57,5 +57,153 @@ public class VisitorPrint implements Visitor
 
     }
     public void visit(NodoStmts n){
+    }
+
+    public void visit(AndNodoBinario n) {
+        System.out.println("[^]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(DiffNodoBinario n) {
+        System.out.println("[!=]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(DivEnteraNodoBinario n) {
+        System.out.println("[//]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(DivNodoBinario n) {
+        System.out.println("[/]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(EqualsNodoBinario n) {
+        System.out.println("[==]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(GrNodoBinario n) {
+        System.out.println("[>]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(GrqNodoBinario n) {
+        System.out.println("[>=]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(LeNodoBinario n) {
+        System.out.println("[<]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(LeqNodoBinario n) {
+        System.out.println("[<=]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(ModuloNodoBinario n) {
+        System.out.println("[%]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(NotNodo n) {
+        System.out.println("[!]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(OrNodoBinario n) {
+        System.out.println("[v]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(PorNodoBinario n) {
+        System.out.println("[*]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(PotenciaNodoBinario n) {
+        System.out.println("[**]");
+        System.out.print("[");
+        n.getPrimerHijo().accept(this);
+        System.out.print("]");
+        System.out.print("[");
+        n.getUltimoHijo().accept(this);
+        System.out.println("]");
+    }
+
+    public void visit(PrintNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(WhileNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
