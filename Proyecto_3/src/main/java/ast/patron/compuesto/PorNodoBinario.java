@@ -4,12 +4,13 @@ package ast.patron.compuesto;
 import ast.patron.visitante.Visitor;
 
 /**
- *
+ * Multiplicaicon.
+ * 
  * @author Flores González Luis.
  */
-public class OrNodoBinario extends NodoBinario{
-    
-    public OrNodoBinario(Nodo l, Nodo r){
+public class PorNodoBinario extends NodoBinario{
+
+    public PorNodoBinario(Nodo l, Nodo r) {
         super(l, r);
     }
     
@@ -17,4 +18,5 @@ public class OrNodoBinario extends NodoBinario{
     public void accept(Visitor v){
         v.visit(this);
     }
+    
 }

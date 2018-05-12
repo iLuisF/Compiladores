@@ -90,7 +90,7 @@ aux2: and_test OR {$$ = new OrNodoBinario($1, null);}
 
 /*    and_expr: (not_test 'and')* not_test */
 and_test: not_test {$$ = $1;}
-        | aux7 not_test {$$ = $1; $$.agregaHijoFinal($2)}
+        | aux7 not_test {$$ = $1; $$.agregaHijoFinal($2);}
 ;
 
 /*    and_expr: (not_test 'and')+ */
@@ -114,12 +114,12 @@ aux4: expr comp_op {$$ = $2; $$.agregaHijoPrincipio($1);}
 ;
 
 /*    comp_op: '<'|'>'|'=='|'>='|'<='|'!=' */
-comp_op: LE {}
-       | GR {}
-       | EQUALS {}
-       | GRQ {}
-       | LEQ {}
-       | DIFF {}
+comp_op: LE {$$ = new LeNodoBinario(null, null);}
+       | GR {$$ = new GrNodoBinario(null, null);}
+       | EQUALS {$$ = new EqualsNodoBinario(null, null);}
+       | GRQ {$$ = new GrqNodoBinario(null, null);}
+       | LEQ {$$ = new LeqNodoBinario(null, null);}
+       | DIFF {$$ = new DiffNodoBinario(null, null);}
 ;
 
 /*    expr: (term ('+'|'-'))* term   */
@@ -136,14 +136,14 @@ aux8: term MAS {$$ = new AddNodo($1,null);}
 term: factor {$$ = $1;}
     | aux9 factor {$$ = $1; $$.agregaHijoFinal($2);}
 ;
-aux9: factor POR {}
-    | factor DIVENTERA {}
-    | factor MODULO {}
-    | factor DIV {}
-    | aux9 factor POR {}
-    | aux9 factor DIVENTERA {}
-    | aux9 factor MODULO {}
-    | aux9 factor DIV {}
+aux9: factor POR {$$ = new PorNodoBinario($1, null);}
+    | factor DIVENTERA {$$ = new DivEnteraNodoBinario($1, null);}
+    | factor MODULO {$$ = new ModuloNodoBinario($1, null);}
+    | factor DIV {$$ = new DivNodoBinario($1, null);}
+    | aux9 factor POR {$1.agregaHijoFinal($2); $$ = new PorNodoBinario($1, null);}
+    | aux9 factor DIVENTERA {$1.agregaHijoFinal($2); $$ = new DivEnteraNodoBinario($1, null);}
+    | aux9 factor MODULO {$1.agregaHijoFinal($2); $$ = new ModuloNodoBinario($1, null);}
+    | aux9 factor DIV {$1.agregaHijoFinal($2); $$ = new DivNodoBinario($1, null);}
 ;
 /* factor: ('+'|'-') factor | power */
 factor: MAS factor {$$ = new AddNodo($1,null);}
@@ -152,7 +152,7 @@ factor: MAS factor {$$ = new AddNodo($1,null);}
 ;
 /* power: atom ['**' factor] */
 power:  atom {$$ = $1;}
-      | atom POTENCIA factor {}
+      | atom POTENCIA factor {$$ = new PotenciaNodoBinario($1, $3);}
 ;
 
 /* atom: IDENTIFICADOR | ENTERO | CADENA | REAL | BOOLEANO | '(' test ')' */
@@ -168,7 +168,7 @@ private Flexer lexer;
 /* Nodo Raiz del AST */
 public Nodo raiz;
 
-/* Comunicación con el analizador léxico */
+/* Comunicacion con el analizador lexico */
 private int yylex () {
     int yyl_return = -1;
     try {
@@ -180,9 +180,9 @@ private int yylex () {
     return yyl_return;
 }
 
-/* Reporta errores y para ejecución. */
+/* Reporta errores y para ejecucion. */
 public void yyerror (String error) {
-   System.err.println ("Error sintáctico en la línea " + lexer.line());
+   System.err.println ("Error sintactico en la linea " + lexer.line());
    System.exit(1);
 }
 

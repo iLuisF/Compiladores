@@ -13,7 +13,7 @@ import ast.patron.visitante.Visitor;
  */
 public class PrintNodoBinario extends NodoBinario{
     
-    PrintNodoBinario(Nodo l, Nodo r){
+    public PrintNodoBinario(Nodo l, Nodo r){
         super(l, r);
     }
     

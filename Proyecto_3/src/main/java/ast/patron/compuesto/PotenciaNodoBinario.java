@@ -11,14 +11,14 @@ import ast.patron.visitante.Visitor;
  *
  * @author Flores González Luis.
  */
-public class AndNodoBinario extends NodoBinario{
-    
-    public AndNodoBinario(Nodo l, Nodo r){
-        super(l);
+public class PotenciaNodoBinario extends NodoBinario{
+
+    public PotenciaNodoBinario(Nodo l, Nodo r) {
+        super(l, r);
     }
     
-    @Override
     public void accept(Visitor v){
         v.visit(this);
     }
+    
 }

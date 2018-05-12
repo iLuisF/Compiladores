@@ -8,17 +8,18 @@ package ast.patron.compuesto;
 import ast.patron.visitante.Visitor;
 
 /**
- *
+ * Nodo >.
  * @author Flores González Luis.
  */
-public class AndNodoBinario extends NodoBinario{
-    
-    public AndNodoBinario(Nodo l, Nodo r){
-        super(l);
+public class GrNodoBinario extends NodoBinario{
+
+    public GrNodoBinario(Nodo l, Nodo r) {
+        super(l, r);
     }
     
     @Override
     public void accept(Visitor v){
         v.visit(this);
     }
+    
 }

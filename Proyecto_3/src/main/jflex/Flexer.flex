@@ -164,5 +164,5 @@ BOOLEAN		        =	("True" | "False")
                                               return 0;
 				            }
 					  }
-[^]					  { System.out.println("Error de sintáxis: caractér inválido: " + yytext() + "\nLínea "+(yyline+1));
+[^]					  { System.out.println("Error de sintaxis: caracter invalido: " + yytext() + "\nLinea "+(yyline+1));
 					    System.exit(1); }

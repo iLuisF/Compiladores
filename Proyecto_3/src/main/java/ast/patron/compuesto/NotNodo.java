@@ -13,7 +13,7 @@ import ast.patron.visitante.Visitor;
  */
 public class NotNodo extends Compuesto{
     
-    NotNodo(Nodo l){
+    public NotNodo(Nodo l){
         super(l);
     }
     

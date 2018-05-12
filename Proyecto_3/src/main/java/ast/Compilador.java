@@ -8,7 +8,7 @@ import ast.patron.visitante.*;
 public class Compilador{
 
     Parser parser;
-    Nodo raízAST;
+    Nodo raiz;
     VisitorPrint v_print;
 
     Compilador(Reader fuente){
@@ -19,11 +19,11 @@ public class Compilador{
     public void ConstruyeAST(boolean debug){
         parser.yydebug = debug;
         parser.yyparse(); // análisis léxico, sintáctio y constucción del AST
-        raízAST = parser.raíz;
+        raiz = parser.raiz;
     }
 
     public void imprimeAST(){
-        parser.raíz.accept(v_print);
+        parser.raiz.accept(v_print);
     }
 
     public static void main(String[] args){

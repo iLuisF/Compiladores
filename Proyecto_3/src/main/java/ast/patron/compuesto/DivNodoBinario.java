@@ -8,17 +8,19 @@ package ast.patron.compuesto;
 import ast.patron.visitante.Visitor;
 
 /**
- *
+ *  Division.
+ * 
  * @author Flores González Luis.
  */
-public class AndNodoBinario extends NodoBinario{
-    
-    public AndNodoBinario(Nodo l, Nodo r){
-        super(l);
+public class DivNodoBinario extends NodoBinario{
+
+    public DivNodoBinario(Nodo l, Nodo r) {
+        super(l, r);
     }
     
     @Override
     public void accept(Visitor v){
         v.visit(this);
-    }
+    }    
+    
 }
