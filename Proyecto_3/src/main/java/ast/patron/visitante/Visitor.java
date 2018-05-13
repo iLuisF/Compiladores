@@ -32,4 +32,5 @@ public interface Visitor
     public void visit(BooleanoHoja n);
     public void visit(CadenaHoja n);
     public void visit(RealHoja n);
+    public void visit(IfNodo n);
 }
