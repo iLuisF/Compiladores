@@ -51,7 +51,7 @@ public class VisitanteConcreto implements Visitor {
     
 
     public void visit(AddNodo n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     public void visit(AsigNodo n) {
