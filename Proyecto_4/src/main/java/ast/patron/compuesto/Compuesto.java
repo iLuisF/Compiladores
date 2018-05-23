@@ -1,7 +1,5 @@
 package ast.patron.compuesto;
 import ast.patron.visitante.*;
-import java.util.LinkedList;
-import java.util.Iterator;
 
 public class Compuesto extends Nodo
 {

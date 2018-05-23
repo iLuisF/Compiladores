@@ -10,10 +10,12 @@ public class Compilador{
     Parser parser;
     Nodo raiz;
     VisitorPrint v_print;
+    VisitanteConcreto v_conc;
 
     Compilador(Reader fuente){
         parser = new Parser(fuente);
         v_print = new VisitorPrint();
+        v_conc = new VisitanteConcreto();
     }
 
     public void ConstruyeAST(boolean debug){
@@ -23,11 +25,12 @@ public class Compilador{
     }
 
     public void imprimeAST(){
+        // TODO
         parser.raiz.accept(v_print);
     }
 
     public static void main(String[] args){
-            String archivo = "src/main/resources/fizzbuzz.p";
+            String archivo = "src/main/resources/test.p";
         try{
             Reader a = new FileReader(archivo);
             Compilador c  = new Compilador(a);

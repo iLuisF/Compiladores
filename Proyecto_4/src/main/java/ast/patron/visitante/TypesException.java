@@ -11,7 +11,13 @@ package ast.patron.visitante;
  */
 public class TypesException extends Exception {
     
-    public TypesException(String op, String t1, String t2){
-        System.err.println("Los tipos "+ t1 + " y " + t2 + " no son válidos con la operación " + op);
+    private final String[] typesNames = {"Booleano", "Entero", "Real", "Cadena"};
+    
+    public TypesException(String op, int t1, int t2){
+        System.err.println("Los tipos "+ typesNames[t1] + " y " + typesNames[t2] + " no son válidos con la operación " + op);
+    }
+    
+    public TypesException(int t1, int t2, String nameId){
+        System.err.println("Reasignación de un tipo " + typesNames[t1] + " a " + typesNames[t2] + " en variable " + nameId ) ;
     }
 }
