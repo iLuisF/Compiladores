@@ -17,7 +17,7 @@ package ast;
 
 
 
-//#line 2 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 2 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
   import ast.patron.compuesto.*;
   import java.lang.Math;
   import java.io.*;
@@ -427,7 +427,7 @@ final static String yyrule[] = {
 "atom : PA test PC",
 };
 
-//#line 167 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 167 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 private Flexer lexer;
 /* Nodo Raiz del AST */
 public Nodo raiz;
@@ -610,283 +610,283 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 20 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 20 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {raiz = yyval; System.out.println("Reconocimiento Exitoso");}
 break;
 case 2:
-//#line 21 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 21 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {raiz = val_peek(0); System.out.println("Reconocimiento Exitoso");}
 break;
 case 4:
-//#line 26 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 26 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new NodoStmts(val_peek(0));}
 break;
 case 5:
-//#line 27 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 27 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(1);}
 break;
 case 6:
-//#line 28 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 28 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {val_peek(1).agregaHijoFinal(val_peek(0)); yyval = val_peek(1);}
 break;
 case 7:
-//#line 32 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 32 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 8:
-//#line 33 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 33 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 9:
-//#line 37 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 37 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 10:
-//#line 38 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 38 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 11:
-//#line 42 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 42 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {}
 break;
 case 12:
-//#line 43 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 43 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {}
 break;
 case 13:
-//#line 47 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 47 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new WhileNodoBinario(val_peek(2), val_peek(0));}
 break;
 case 14:
-//#line 51 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 51 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 15:
-//#line 52 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 52 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(1);}
 break;
 case 16:
-//#line 56 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 56 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new NodoStmts(val_peek(0));}
 break;
 case 17:
-//#line 57 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 57 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {val_peek(1).agregaHijoFinal(val_peek(0)); yyval = val_peek(1);}
 break;
 case 18:
-//#line 61 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 61 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(1);}
 break;
 case 19:
-//#line 65 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 65 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 20:
-//#line 66 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 66 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 21:
-//#line 70 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 70 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 22:
-//#line 71 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 71 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new AsigNodo(val_peek(2), val_peek(0));}
 break;
 case 23:
-//#line 75 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 75 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new PrintNodoBinario(val_peek(0), null);}
 break;
 case 24:
-//#line 79 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 79 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 25:
-//#line 83 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 83 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 26:
-//#line 84 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 84 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(1); yyval.agregaHijoFinal(val_peek(0));}
 break;
 case 27:
-//#line 87 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 87 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new OrNodoBinario(val_peek(1), null);}
 break;
 case 28:
-//#line 88 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 88 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(2); val_peek(0).agregaHijoPrincipio(val_peek(1)); yyval.agregaHijoFinal(val_peek(0));}
 break;
 case 29:
-//#line 92 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 92 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 30:
-//#line 93 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 93 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(1); yyval.agregaHijoFinal(val_peek(0));}
 break;
 case 31:
-//#line 97 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 97 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new AndNodoBinario(val_peek(1), null);}
 break;
 case 32:
-//#line 98 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 98 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(2); val_peek(0).agregaHijoPrincipio(val_peek(1)); yyval.agregaHijoFinal(val_peek(0));}
 break;
 case 33:
-//#line 102 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 102 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new NotNodo(val_peek(0));}
 break;
 case 34:
-//#line 103 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 103 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 35:
-//#line 107 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 107 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 36:
-//#line 108 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 108 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(1); yyval.agregaHijoFinal(val_peek(0));}
 break;
 case 37:
-//#line 112 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 112 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0); yyval.agregaHijoPrincipio(val_peek(1));}
 break;
 case 38:
-//#line 113 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 113 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(2); val_peek(0).agregaHijoPrincipio(val_peek(1)); yyval.agregaHijoFinal(val_peek(0));}
 break;
 case 39:
-//#line 117 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 117 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new LeNodoBinario(null, null);}
 break;
 case 40:
-//#line 118 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 118 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new GrNodoBinario(null, null);}
 break;
 case 41:
-//#line 119 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 119 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new EqualsNodoBinario(null, null);}
 break;
 case 42:
-//#line 120 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 120 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new GrqNodoBinario(null, null);}
 break;
 case 43:
-//#line 121 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 121 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new LeqNodoBinario(null, null);}
 break;
 case 44:
-//#line 122 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 122 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new DiffNodoBinario(null, null);}
 break;
 case 45:
-//#line 126 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 126 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 46:
-//#line 127 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 127 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(1); yyval.agregaHijoFinal(val_peek(0));}
 break;
 case 47:
-//#line 129 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 129 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new AddNodo(val_peek(1),null);}
 break;
 case 48:
-//#line 130 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 130 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new DifNodo(val_peek(1),null);}
 break;
 case 49:
-//#line 131 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 131 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {val_peek(2).agregaHijoFinal(val_peek(1)); yyval = new AddNodo(val_peek(2),null);}
 break;
 case 50:
-//#line 132 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 132 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {val_peek(2).agregaHijoFinal(val_peek(1)); yyval = new DifNodo(val_peek(2),null);}
 break;
 case 51:
-//#line 136 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 136 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 52:
-//#line 137 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 137 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(1); yyval.agregaHijoFinal(val_peek(0));}
 break;
 case 53:
-//#line 139 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 139 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new PorNodoBinario(val_peek(1), null);}
 break;
 case 54:
-//#line 140 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 140 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new DivEnteraNodoBinario(val_peek(1), null);}
 break;
 case 55:
-//#line 141 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 141 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new ModuloNodoBinario(val_peek(1), null);}
 break;
 case 56:
-//#line 142 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 142 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new DivNodoBinario(val_peek(1), null);}
 break;
 case 57:
-//#line 143 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 143 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {val_peek(2).agregaHijoFinal(val_peek(1)); yyval = new PorNodoBinario(val_peek(2), null);}
 break;
 case 58:
-//#line 144 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 144 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {val_peek(2).agregaHijoFinal(val_peek(1)); yyval = new DivEnteraNodoBinario(val_peek(2), null);}
 break;
 case 59:
-//#line 145 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 145 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {val_peek(2).agregaHijoFinal(val_peek(1)); yyval = new ModuloNodoBinario(val_peek(2), null);}
 break;
 case 60:
-//#line 146 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 146 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {val_peek(2).agregaHijoFinal(val_peek(1)); yyval = new DivNodoBinario(val_peek(2), null);}
 break;
 case 61:
-//#line 149 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 149 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new AddNodo(val_peek(1),null);}
 break;
 case 62:
-//#line 150 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 150 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new DifNodo(val_peek(1),null);}
 break;
 case 63:
-//#line 151 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 151 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 64:
-//#line 154 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 154 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 65:
-//#line 155 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 155 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = new PotenciaNodoBinario(val_peek(2), val_peek(0));}
 break;
 case 66:
-//#line 159 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 159 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 67:
-//#line 160 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 160 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 68:
-//#line 161 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 161 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 69:
-//#line 162 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 162 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 70:
-//#line 163 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 163 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(0);}
 break;
 case 71:
-//#line 164 "C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y"
+//#line 164 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
 {yyval = val_peek(1);}
 break;
 //#line 824 "Parser.java"

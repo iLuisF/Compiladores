@@ -41,8 +41,8 @@
             </goals>
             <configuration>
               <workingDirectory>${project.basedir}/target/generated-sources/jflex/asintactico</workingDirectory>
-              <executable>byacc</executable>
-              <commandlineArgs>-Jpackage=ast -Jsemantic=Nodo C:/Users/Luis/Documents/GitHub/Compiladores/Proyecto_3/src/main/byaccj/Parser.y</commandlineArgs>
+              <executable>byaccj</executable>
+              <commandlineArgs>-Jpackage=ast -Jsemantic=Nodo ${project.basedir}/src/main/byaccj/Parser.y</commandlineArgs>
             </configuration>
           </execution>
         </executions>
