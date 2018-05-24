@@ -68,6 +68,7 @@ public class VisitanteConcreto implements Visitor {
         try {
             n.getPrimerHijo().accept(this);
             n.getUltimoHijo().accept(this);
+            System.out.println("..: " + n.getPrimerHijo().getType() + " y " + n.getUltimoHijo().getType());
             n.setTipo(SysTypes.checkSuma(n.getPrimerHijo().getType(), n.getUltimoHijo().getType()));
         } catch (TypesException ex) {
             Logger.getLogger(VisitanteConcreto.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,11 +77,10 @@ public class VisitanteConcreto implements Visitor {
     
     // En la Asignación es donde se puede registrar un identificador en la tabla de símbolos
     public void visit(AsigNodo n) {
-        n.getPrimerHijo().accept(this);
         n.getUltimoHijo().accept(this);
-        String name = n.getPrimerHijo().getNombre();
+        String name = n.getPrimerHijo().getNombre();  
         // Verifica en la TS si existe
-        if (tablaSim.contains(name)){
+        if (tablaSim.containsKey(name)){            
             // Verifica si el tipo que tenía es igual al nuevo
             if(tablaSim.get(name) != n.getUltimoHijo().getType()){
                 try {
@@ -92,8 +92,11 @@ public class VisitanteConcreto implements Visitor {
                 n.setTipo(tablaSim.get(name));
             }
         }else{  // Si no lo contiene, registra
+            System.out.println(tablaSim.keySet());
             tablaSim.put(name, n.getUltimoHijo().getType());
         }
+        
+        n.getPrimerHijo().accept(this);
     }
 
     // Sup que sólo tiene que visitar a todos y no tiene tipo
@@ -127,8 +130,15 @@ public class VisitanteConcreto implements Visitor {
     * pues significa que se intenta utilizar y nunca se declaró.
     */
     public void visit(IdentifierHoja n) {
-        if( !tablaSim.contains(n.getNombre())){
-            System.err.println("La variable " + n.getNombre() + " No tiene un valor definido");
+        System.out.println(n.getNombre());
+        System.out.println(tablaSim.get(n.getNombre()));
+        if( !tablaSim.containsKey(n.getNombre())){
+            System.err.println("La variable " + n.getNombre() + " no tiene un valor definido");
+            System.out.println(tablaSim.keySet());
+            
+            System.exit(0);
+        }else{
+            n.setTipo(tablaSim.get(n.getNombre()));
         }
     }
 

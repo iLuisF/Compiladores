@@ -26,7 +26,7 @@ public class Compilador{
 
     public void imprimeAST(){
         // TODO
-        parser.raiz.accept(v_print);
+        parser.raiz.accept(v_conc);
     }
 
     public static void main(String[] args){
@@ -35,7 +35,7 @@ public class Compilador{
             Reader a = new FileReader(archivo);
             Compilador c  = new Compilador(a);
             c.ConstruyeAST(true);
-            c.imprimeAST();
+            c.imprimeAST();            
         }catch(FileNotFoundException e){
             System.err.println("El archivo " + archivo +" no fue encontrado. ");
         }catch(ArrayIndexOutOfBoundsException e){
