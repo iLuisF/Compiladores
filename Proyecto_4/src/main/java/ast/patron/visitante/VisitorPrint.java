@@ -219,6 +219,28 @@ public class VisitorPrint implements Visitor
         System.out.println("]");
     }
 
+    public void visit(IfNodo n){
+        System.out.println("[if]");
+        System.out.println("[");
+        if(n.getPrimerHijo() != null){
+            n.getPrimerHijo().accept(this);
+        }
+        System.out.println("]");
+        System.out.println("[");
+        if(n.getHijos().getAll().get(1) != null){
+            n.getHijos().getAll().get(1).accept(this);
+        }
+        System.out.println("]");
+        if(n.getHijos().size() == 3){
+            System.out.println("[else]");
+            System.out.println("[");
+            if(n.getHijos().getAll().get(2) != null){
+                n.getHijos().getAll().get(2).accept(this);
+            }
+            System.out.println("]");
+        }
+    }
+    
     public void visit(BooleanoHoja n) {
         System.out.print("[BooleanoHoja]: " + n.getValor().bval);
     }

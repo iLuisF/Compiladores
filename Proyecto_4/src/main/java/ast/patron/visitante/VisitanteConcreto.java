@@ -16,6 +16,7 @@ import ast.patron.compuesto.GrNodoBinario;
 import ast.patron.compuesto.GrqNodoBinario;
 import ast.patron.compuesto.Hoja;
 import ast.patron.compuesto.IdentifierHoja;
+import ast.patron.compuesto.IfNodo;
 import ast.patron.compuesto.IntHoja;
 import ast.patron.compuesto.LeNodoBinario;
 import ast.patron.compuesto.LeqNodoBinario;
@@ -91,7 +92,7 @@ public class VisitanteConcreto implements Visitor {
                 n.setTipo(tablaSim.get(name));
             }
         }else{  // Si no lo contiene, registra
-            System.out.println(tablaSim.keySet());
+            //System.out.println(tablaSim.keySet());
             tablaSim.put(name, n.getUltimoHijo().getType());
         }
         
@@ -129,11 +130,11 @@ public class VisitanteConcreto implements Visitor {
     * pues significa que se intenta utilizar y nunca se declaró.
     */
     public void visit(IdentifierHoja n) {
-        System.out.println(n.getNombre());
-        System.out.println(tablaSim.get(n.getNombre()));
+        //System.out.println(n.getNombre());
+        //System.out.println(tablaSim.get(n.getNombre()));
         if( !tablaSim.containsKey(n.getNombre())){
             System.err.println("La variable " + n.getNombre() + " no tiene un valor definido");
-            System.out.println(tablaSim.keySet());
+            //System.out.println(tablaSim.keySet());
             
             System.exit(0);
         }else{
@@ -288,6 +289,25 @@ public class VisitanteConcreto implements Visitor {
             Logger.getLogger(VisitanteConcreto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void visit(IfNodo n){          
+        if(n.getPrimerHijo() != null){
+            n.getPrimerHijo().accept(this);            
+        }
+        if(n.getHijos().getAll().get(1) != null){
+            n.getHijos().getAll().get(1).accept(this);            
+        }
+        if(n.getHijos().size() == 3){
+            if(n.getHijos().getAll().get(2) != null){
+                n.getHijos().getAll().get(2).accept(this);
+            }
+        }
+        try {         
+            n.setTipo(SysTypes.checkIf(n.getPrimerHijo().getType()));
+        } catch (TypesException ex) {
+            Logger.getLogger(VisitanteConcreto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void visit(BooleanoHoja n) {
         n.setTipo(BOOL);
@@ -310,5 +330,5 @@ public class VisitanteConcreto implements Visitor {
         } catch (TypesException ex) {
             Logger.getLogger(VisitanteConcreto.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }   
 }

@@ -114,7 +114,7 @@ public class SysTypes {
             throw new TypesException("DIVISION", t1, t2);
         }else if ( t1 == CAD || t2 == CAD){  // No hay division de CADs
             throw new TypesException("DIVISION", t1, t2);
-        }else{
+        }else{ //Para evitar conflictos, el tipo sera real.
             return RL;
         }
     }
@@ -176,6 +176,14 @@ public class SysTypes {
         }
     }
     
+    public static int checkIf(int t1) throws TypesException{
+        if (t1 != BOOL){ 
+            throw new TypesException("IF", t1);
+        } else{
+            return BOOL;
+        }
+    }
+    
     /**
      * Debe ser válido en numeros y cadenass.
      * 
@@ -207,5 +215,5 @@ public class SysTypes {
     
     public static int checkPrint(int t1) throws TypesException{
         return t1;
-    }
+    }       
 }
