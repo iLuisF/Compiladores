@@ -647,11 +647,11 @@ case 10:
 break;
 case 11:
 //#line 42 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
-{}
+{yyval = new IfNodo(val_peek(5), val_peek(3), val_peek(0));}
 break;
 case 12:
 //#line 43 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
-{}
+{yyval = new IfNodo(val_peek(2), val_peek(0));}
 break;
 case 13:
 //#line 47 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
@@ -707,7 +707,7 @@ case 25:
 break;
 case 26:
 //#line 84 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
-{yyval = val_peek(1); yyval.agregaHijoFinal(val_peek(0));}
+{yyval.agregaHijoFinal(val_peek(0)); yyval = val_peek(1);}
 break;
 case 27:
 //#line 87 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
@@ -715,7 +715,7 @@ case 27:
 break;
 case 28:
 //#line 88 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
-{yyval = val_peek(2); val_peek(0).agregaHijoPrincipio(val_peek(1)); yyval.agregaHijoFinal(val_peek(0));}
+{val_peek(2).agregaHijoFinal(val_peek(1)); yyval = new OrNodoBinario(val_peek(2), null);}
 break;
 case 29:
 //#line 92 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
@@ -723,7 +723,7 @@ case 29:
 break;
 case 30:
 //#line 93 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
-{yyval = val_peek(1); yyval.agregaHijoFinal(val_peek(0));}
+{yyval.agregaHijoFinal(val_peek(0)); yyval = val_peek(1);}
 break;
 case 31:
 //#line 97 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
@@ -731,7 +731,7 @@ case 31:
 break;
 case 32:
 //#line 98 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"
-{yyval = val_peek(2); val_peek(0).agregaHijoPrincipio(val_peek(1)); yyval.agregaHijoFinal(val_peek(0));}
+{val_peek(2).agregaHijoFinal(val_peek(1)); yyval = new AndNodoBinario(val_peek(2), null);}
 break;
 case 33:
 //#line 102 "/home/ulises/NetBeansProjects/Compiladores/Proyecto_4/src/main/byaccj/Parser.y"

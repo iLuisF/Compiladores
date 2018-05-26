@@ -133,7 +133,7 @@ public class VisitanteConcreto implements Visitor {
         //System.out.println(n.getNombre());
         //System.out.println(tablaSim.get(n.getNombre()));
         if( !tablaSim.containsKey(n.getNombre())){
-            System.err.println("La variable " + n.getNombre() + " no tiene un valor definido");
+            System.err.println("\n\nLa variable " + n.getNombre() + " no tiene un valor definido");
             //System.out.println(tablaSim.keySet());
             
             System.exit(0);
