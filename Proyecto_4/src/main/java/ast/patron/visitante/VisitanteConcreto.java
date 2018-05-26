@@ -67,8 +67,7 @@ public class VisitanteConcreto implements Visitor {
     public void visit(AddNodo n) {
         try {
             n.getPrimerHijo().accept(this);
-            n.getUltimoHijo().accept(this);
-            System.out.println("..: " + n.getPrimerHijo().getType() + " y " + n.getUltimoHijo().getType());
+            n.getUltimoHijo().accept(this);            
             n.setTipo(SysTypes.checkSuma(n.getPrimerHijo().getType(), n.getUltimoHijo().getType()));
         } catch (TypesException ex) {
             Logger.getLogger(VisitanteConcreto.class.getName()).log(Level.SEVERE, null, ex);
@@ -195,7 +194,13 @@ public class VisitanteConcreto implements Visitor {
     
     // Debe ser válido en numeros y cadenas
     public void visit(EqualsNodoBinario n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            n.getPrimerHijo().accept(this);
+            n.getUltimoHijo().accept(this);
+            n.setTipo(SysTypes.checkEquals(n.getPrimerHijo().getType(), n.getUltimoHijo().getType()));
+        } catch (TypesException ex) {
+            Logger.getLogger(VisitanteConcreto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     // >
@@ -227,7 +232,12 @@ public class VisitanteConcreto implements Visitor {
     }
 
     public void visit(NotNodo n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        n.getPrimerHijo().accept(this);        
+        try {
+            n.setTipo(SysTypes.checkNot(n.getPrimerHijo().getType()));
+        } catch (TypesException ex) {
+            Logger.getLogger(VisitanteConcreto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void visit(OrNodoBinario n) {
@@ -261,11 +271,22 @@ public class VisitanteConcreto implements Visitor {
     }
 
     public void visit(PrintNodoBinario n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        n.getPrimerHijo().accept(this);        
+        try {
+            n.setTipo(SysTypes.checkPrint(n.getPrimerHijo().getType()));
+        } catch (TypesException ex) {
+            Logger.getLogger(VisitanteConcreto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void visit(WhileNodoBinario n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            n.getPrimerHijo().accept(this);
+            n.getUltimoHijo().accept(this);            
+            n.setTipo(SysTypes.checkWhile(n.getPrimerHijo().getType(), n.getUltimoHijo().getType()));
+        } catch (TypesException ex) {
+            Logger.getLogger(VisitanteConcreto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void visit(BooleanoHoja n) {

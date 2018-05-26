@@ -159,4 +159,53 @@ public class SysTypes {
         }
     }
     
+    /**
+     * Verifica si los tipos dados son válidos en el sistema definido para una
+     * potencia.
+     * 
+     * @param t1 tipo de entrada 1
+     * @param t2 tipo de entrada 2
+     * @return el tipo correspondiente o un error
+     * @throws ast.patron.visitante.TypesException
+     */
+    public static int checkWhile(int t1, int t2) throws TypesException{
+        if (t1 != BOOL){ 
+            throw new TypesException("WHILE", t1);
+        } else{
+            return BOOL;
+        }
+    }
+    
+    /**
+     * Debe ser válido en numeros y cadenass.
+     * 
+     * @param t1
+     * @param t2
+     * @return
+     * @throws TypesException 
+     */
+    public static int checkEquals(int t1, int t2) throws TypesException{
+        if (t1 == ENT && t2 == ENT){ 
+            return BOOL;
+        } 
+        if(t1 == CAD && t2 == CAD){
+            return BOOL;
+        }
+        if(t1 == RL && t2 == RL){
+            return BOOL;
+        }
+        throw new TypesException("EQUALS", t1, t2);
+    }
+        
+    public static int checkNot(int t1) throws TypesException{
+        if (t1 != BOOL){ 
+            throw new TypesException("NOT", t1);
+        } else{
+            return BOOL;
+        }
+    }
+    
+    public static int checkPrint(int t1) throws TypesException{
+        return t1;
+    }
 }

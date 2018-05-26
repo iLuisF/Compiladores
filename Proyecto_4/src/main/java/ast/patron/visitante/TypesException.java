@@ -22,4 +22,9 @@ public class TypesException extends Exception {
         System.err.println("Reasignación de un tipo " + typesNames[t1] + " a " + typesNames[t2] + " en variable " + nameId ) ;
         System.exit(0);
     }
+    
+    public TypesException(String op, int t1){
+        System.err.println("El tipo "+ typesNames[t1] + " no es válido con la operación " + op);
+        System.exit(0);
+    }
 }
