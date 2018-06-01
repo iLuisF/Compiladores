@@ -51,16 +51,11 @@ public class VisitanteGenerador implements Visitor{
     
     Registros reg = new Registros();
             
-    
-    public void visit(AddNodo n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void visit(AsigNodo n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public void visit(DifNodo n){
+    /**
+     * Metodo auxiliar para resolver la sum, multiplicacion y division
+     * @param n Nodo a traducir
+     */
+    private void visitSumResMult(NodoBinario n, String opNameEnt, String opNameFlt){
         Nodo hi = n.getPrimerHijo();
         Nodo hd = n.getUltimoHijo();
 
@@ -79,10 +74,22 @@ public class VisitanteGenerador implements Visitor{
         reg.setObjetivo(siguientes[1], entero);
         hd.accept(this);
 
-        String opcode =  entero? "sub" : "sub.s";
+        String opcode =  entero? opNameEnt : opNameFlt;
 
         System.out.println(opcode + " " + objetivo + ", " +
-                            siguientes[0] + ", " + siguientes[1]);   
+                            siguientes[0] + ", " + siguientes[1]);
+    }
+    
+    public void visit(AddNodo n) {
+        visitSumResMult(n, "add", "add.s");
+    }
+
+    public void visit(AsigNodo n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void visit(DifNodo n){
+        visitSumResMult(n, "sub", "sub.s");
     }
 
     public void visit(Compuesto n) {
@@ -162,7 +169,7 @@ public class VisitanteGenerador implements Visitor{
     }
 
     public void visit(PorNodoBinario n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        visitSumResMult(n, "mul", "mul.s");
     }
 
     public void visit(PotenciaNodoBinario n) {
