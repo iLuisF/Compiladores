@@ -49,7 +49,10 @@ public class VisitanteGenerador implements Visitor{
     private static final int RL = 2;
     private static final int CAD = 3;
     
-    Registros reg = new Registros();
+    Registros reg = new Registros();  
+    //main: indica el comienzo de codigo(primera instrucción a ejecutar).
+    //.data: declaraciones que siguen esta linea.
+    String instrucciones = "main:\n.data\n";
             
     /**
      * Metodo auxiliar para resolver la sum, multiplicacion y division
@@ -176,8 +179,34 @@ public class VisitanteGenerador implements Visitor{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * 
+     * li: load inmediate value en el registro destino.
+     * syscall: se llama al sistema operativo para realizar la operación.
+     * @param n 
+     */
     public void visit(PrintNodoBinario n) {
         // metodo listo para que ai Luis efe haga de als suyas
+        Nodo hi = n.getPrimerHijo();
+        Nodo hd = n.getUltimoHijo();
+
+        // Tipo de registro objetivo
+        boolean entero =  !(n.getType() == RL);
+        
+        // Registro objetivo
+        int objetivo = reg.getObjetivo(entero);
+        String[] siguientes = reg.getNsiguientes(2,entero);
+
+        // Genero el código del subárbol izquiero
+        reg.setObjetivo(siguientes[0],entero);
+        hi.accept(this);
+        
+        if(entero){
+            this.instrucciones += "move $a0 " + objetivo;
+        } else {
+            this.instrucciones += "move $f12 " + objetivo + " li $v0 1" + "syscall";
+        }
+
     }
 
     public void visit(WhileNodoBinario n) {
