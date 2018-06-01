@@ -129,7 +129,7 @@ public class VisitanteGenerador implements Visitor{
     }
 
     public void visit(DivEnteraNodoBinario n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        visitSumResMult(n, "div", "div.s");
     }
 
     public void visit(DivNodoBinario n) {
