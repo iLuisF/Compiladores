@@ -1,0 +1,195 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ast.patron.visitante;
+
+import ast.Registros;
+import ast.patron.compuesto.AddNodo;
+import ast.patron.compuesto.AndNodoBinario;
+import ast.patron.compuesto.AsigNodo;
+import ast.patron.compuesto.BooleanoHoja;
+import ast.patron.compuesto.CadenaHoja;
+import ast.patron.compuesto.Compuesto;
+import ast.patron.compuesto.DifNodo;
+import ast.patron.compuesto.DiffNodoBinario;
+import ast.patron.compuesto.DivEnteraNodoBinario;
+import ast.patron.compuesto.DivNodoBinario;
+import ast.patron.compuesto.EqualsNodoBinario;
+import ast.patron.compuesto.GrNodoBinario;
+import ast.patron.compuesto.GrqNodoBinario;
+import ast.patron.compuesto.Hoja;
+import ast.patron.compuesto.IdentifierHoja;
+import ast.patron.compuesto.IfNodo;
+import ast.patron.compuesto.IntHoja;
+import ast.patron.compuesto.LeNodoBinario;
+import ast.patron.compuesto.LeqNodoBinario;
+import ast.patron.compuesto.ModuloNodoBinario;
+import ast.patron.compuesto.Nodo;
+import ast.patron.compuesto.NodoBinario;
+import ast.patron.compuesto.NodoStmts;
+import ast.patron.compuesto.NotNodo;
+import ast.patron.compuesto.OrNodoBinario;
+import ast.patron.compuesto.PorNodoBinario;
+import ast.patron.compuesto.PotenciaNodoBinario;
+import ast.patron.compuesto.PrintNodoBinario;
+import ast.patron.compuesto.RealHoja;
+import ast.patron.compuesto.WhileNodoBinario;
+
+/**
+ *
+ * @author daniel
+ */
+public class VisitanteGenerador implements Visitor{
+    
+    
+    private static final int BOOL = 0;
+    private static final int ENT = 1;
+    private static final int RL = 2;
+    private static final int CAD = 3;
+    
+    Registros reg = new Registros();
+            
+    
+    public void visit(AddNodo n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(AsigNodo n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void visit(DifNodo n){
+        Nodo hi = n.getPrimerHijo();
+        Nodo hd = n.getUltimoHijo();
+
+        // Tipo de registro objetivo
+        boolean entero =  !(n.getType() == RL);
+        
+        // Registro objetivo
+        int objetivo = reg.getObjetivo(entero);
+        String[] siguientes = reg.getNsiguientes(2,entero);
+
+        // Genero el código del subárbol izquiero
+        reg.setObjetivo(siguientes[0],entero);
+        hi.accept(this);
+
+        // Genero el código del subárbol derecho
+        reg.setObjetivo(siguientes[1], entero);
+        hd.accept(this);
+
+        String opcode =  entero? "sub" : "sub.s";
+
+        System.out.println(opcode + " " + objetivo + ", " +
+                            siguientes[0] + ", " + siguientes[1]);   
+    }
+
+    public void visit(Compuesto n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(Hoja n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(IdentifierHoja n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(IntHoja n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(Nodo n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(NodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(NodoStmts n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(AndNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(DiffNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(DivEnteraNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(DivNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(EqualsNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(GrNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(GrqNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(LeNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(LeqNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(ModuloNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(NotNodo n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(OrNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(PorNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(PotenciaNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(PrintNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(WhileNodoBinario n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(IfNodo n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(BooleanoHoja n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(CadenaHoja n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void visit(RealHoja n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
