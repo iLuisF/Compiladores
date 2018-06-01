@@ -189,7 +189,6 @@ public class VisitanteGenerador implements Visitor{
     }
 
     public void visit(BooleanoHoja n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void visit(CadenaHoja n) {
@@ -197,6 +196,9 @@ public class VisitanteGenerador implements Visitor{
     }
 
     public void visit(RealHoja n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Registro objetivo
+        int objetivo = reg.getObjetivo(false);
+        
+        System.out.println("li" + " " + objetivo + ", " + n.getValor());
     }
 }
