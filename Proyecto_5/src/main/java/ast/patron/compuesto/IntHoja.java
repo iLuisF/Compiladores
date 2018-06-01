@@ -5,7 +5,7 @@ public class IntHoja extends Hoja
 {
     public IntHoja(int i){
 	valor = new Variable(i);
-	tipo = 1;
+	tipo = 2;
     }
 
     public void accept(Visitor v){

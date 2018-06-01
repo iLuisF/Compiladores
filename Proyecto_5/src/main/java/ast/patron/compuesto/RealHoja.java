@@ -5,13 +5,13 @@ import ast.patron.visitante.Visitor;
 
 /**
  *
- * @author Flores González Luis.
+ * @author Flores Gonzï¿½lez Luis.
  */
 public class RealHoja extends Hoja{
     
     public RealHoja(float real){
         valor = new Variable(real);
-        tipo = 1;
+        tipo = 2;
     }
     
     @Override

@@ -177,7 +177,7 @@ public class VisitanteGenerador implements Visitor{
     }
 
     public void visit(PrintNodoBinario n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // metodo listo para que ai Luis efe haga de als suyas
     }
 
     public void visit(WhileNodoBinario n) {

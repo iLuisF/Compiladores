@@ -5,13 +5,13 @@ import ast.patron.visitante.Visitor;
 
 /**
  *
- * @author Flores González Luis.
+ * @author Flores Gonzï¿½lez Luis.
  */
 public class CadenaHoja extends Hoja{
 
     public CadenaHoja(String cadena) {
         valor = new Variable(cadena);
-        tipo = 1;
+        tipo = 3;
     }
         
     @Override

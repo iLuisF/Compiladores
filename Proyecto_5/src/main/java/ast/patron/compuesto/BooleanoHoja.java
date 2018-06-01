@@ -5,7 +5,7 @@ import ast.patron.visitante.Visitor;
 
 /**
  *
- * @author Flores González Luis.
+ * @author Flores Gonzï¿½lez Luis.
  */
 public class BooleanoHoja extends Hoja{
 
@@ -15,7 +15,7 @@ public class BooleanoHoja extends Hoja{
         } else {
             valor = new Variable(false);
         }
-        tipo = 1;
+        tipo = 0;
     }
     
     @Override
