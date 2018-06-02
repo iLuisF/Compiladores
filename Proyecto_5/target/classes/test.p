@@ -1,2 +1,1 @@
-# comment
-2 + 4 + a
+print (1)
