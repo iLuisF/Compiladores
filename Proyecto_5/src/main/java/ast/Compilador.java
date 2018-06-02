@@ -1,8 +1,15 @@
 //import Parser;
 package ast;
-import java.io.*;
 import ast.patron.compuesto.*;
 import ast.patron.visitante.*;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Compilador{
@@ -12,6 +19,8 @@ public class Compilador{
     VisitorPrint v_print;
     VisitanteConcreto v_conc;
     VisitanteGenerador generador;
+    
+    static String nombreArchivo;
 
     Compilador(Reader fuente){
         parser = new Parser(fuente);
@@ -30,18 +39,31 @@ public class Compilador{
         // TODO
         parser.raiz.accept(v_conc);
         parser.raiz.accept(generador);  
-        System.out.println(generador.getInstrucciones());
+        String instr = generador.getInstrucciones();
+        
+        System.out.println("---------INSTRUCCIONES---------\n\n" + instr);
+        FileWriter fw;
+        try {
+            fw = new FileWriter(nombreArchivo.substring(0, nombreArchivo.length()-1) + ".asm");
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(instr);
+            bw.flush();
+            bw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Compilador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void main(String[] args){
-            String archivo = "src/main/resources/test.p";
+        nombreArchivo = args[0];
         try{
-            Reader a = new FileReader(archivo);
+            Reader a = new FileReader(nombreArchivo);
             Compilador c  = new Compilador(a);
             c.ConstruyeAST(true);
             c.imprimeAST();            
         }catch(FileNotFoundException e){
-            System.err.println("El archivo " + archivo +" no fue encontrado. ");
+            System.err.println("El archivo " + nombreArchivo +" no fue encontrado. ");
+            e.printStackTrace();
         }catch(ArrayIndexOutOfBoundsException e){
             System.err.println("Uso: java Compilador [archivo.p]: ");
         }

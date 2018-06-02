@@ -79,7 +79,7 @@ public class VisitanteGenerador implements Visitor{
 
         String opcode =  entero? opNameEnt : opNameFlt;
 
-        instrucciones += opcode + " " + objetivo + ", " + siguientes[0] + ", " + siguientes[1];
+        instrucciones += opcode + " " + objetivo + ", " + siguientes[0] + ", " + siguientes[1]+ "\n";
     }
     
     public void visit(AddNodo n) {
@@ -111,7 +111,7 @@ public class VisitanteGenerador implements Visitor{
     public void visit(IntHoja n) {
         int objetivo = reg.getObjetivo(true);
         
-        instrucciones +="li " + objetivo + ", " + n.getValor().ival;
+        instrucciones +="li " + objetivo + ", " + n.getValor().ival+ "\n";
     }
 
     public void visit(Nodo n) {
@@ -205,9 +205,9 @@ public class VisitanteGenerador implements Visitor{
         hi.accept(this);
         
         if(entero){
-            this.instrucciones += "move $a0 " + objetivo + " li $v0 1" + "syscall";
+            this.instrucciones += "move $a0, " + objetivo + "\nli $v0, 1\n" + "syscall\n";
         } else {
-            this.instrucciones += "move $f12 " + objetivo + " li $v0 1" + "syscall";
+            this.instrucciones += "move $f12, " + objetivo + "\nli $v0, 1\n" + "syscall\n";
         }
 
     }
@@ -231,7 +231,7 @@ public class VisitanteGenerador implements Visitor{
         // Registro objetivo
         int objetivo = reg.getObjetivo(false);
         
-        instrucciones +="li" + " " + objetivo + ", " + n.getValor().dval;
+        instrucciones +="li" + " " + objetivo + ", " + n.getValor().dval + "\n";
     }
     
     public String getInstrucciones(){
