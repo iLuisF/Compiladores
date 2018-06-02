@@ -52,7 +52,7 @@ public class VisitanteGenerador implements Visitor{
     Registros reg = new Registros();  
     //main: indica el comienzo de codigo(primera instrucción a ejecutar).
     //.data: declaraciones que siguen esta linea.
-    String instrucciones = "main:\n.data\n";
+    private String instrucciones = ".data\n";
             
     /**
      * Metodo auxiliar para resolver la sum, multiplicacion y division
@@ -79,8 +79,7 @@ public class VisitanteGenerador implements Visitor{
 
         String opcode =  entero? opNameEnt : opNameFlt;
 
-        System.out.println(opcode + " " + objetivo + ", " +
-                            siguientes[0] + ", " + siguientes[1]);
+        instrucciones += opcode + " " + objetivo + ", " + siguientes[0] + ", " + siguientes[1];
     }
     
     public void visit(AddNodo n) {
@@ -112,7 +111,7 @@ public class VisitanteGenerador implements Visitor{
     public void visit(IntHoja n) {
         int objetivo = reg.getObjetivo(true);
         
-        System.out.println("li " + objetivo + ", " + n.getValor().ival);
+        instrucciones +="li " + objetivo + ", " + n.getValor().ival;
     }
 
     public void visit(Nodo n) {
@@ -206,7 +205,7 @@ public class VisitanteGenerador implements Visitor{
         hi.accept(this);
         
         if(entero){
-            this.instrucciones += "move $a0 " + objetivo;
+            this.instrucciones += "move $a0 " + objetivo + " li $v0 1" + "syscall";
         } else {
             this.instrucciones += "move $f12 " + objetivo + " li $v0 1" + "syscall";
         }
@@ -232,7 +231,7 @@ public class VisitanteGenerador implements Visitor{
         // Registro objetivo
         int objetivo = reg.getObjetivo(false);
         
-        System.out.println("li" + " " + objetivo + ", " + n.getValor().dval);
+        instrucciones +="li" + " " + objetivo + ", " + n.getValor().dval;
     }
     
     public String getInstrucciones(){
