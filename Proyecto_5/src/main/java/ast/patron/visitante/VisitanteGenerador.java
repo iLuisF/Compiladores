@@ -52,7 +52,7 @@ public class VisitanteGenerador implements Visitor{
     Registros reg = new Registros();  
     //main: indica el comienzo de codigo(primera instrucción a ejecutar).
     //.data: declaraciones que siguen esta linea.
-    private String instrucciones = ".data\n";
+    private String instrucciones = ".text\n";
             
     /**
      * Metodo auxiliar para resolver la sum, multiplicacion y division
@@ -66,7 +66,7 @@ public class VisitanteGenerador implements Visitor{
         boolean entero =  !(n.getType() == RL);
         
         // Registro objetivo
-        int objetivo = reg.getObjetivo(entero);
+        String objetivo = reg.getObjetivo(entero);
         String[] siguientes = reg.getNsiguientes(2,entero);
 
         // Genero el código del subárbol izquiero
@@ -109,9 +109,9 @@ public class VisitanteGenerador implements Visitor{
     }
 
     public void visit(IntHoja n) {
-        int objetivo = reg.getObjetivo(true);
-        
-        instrucciones +="li " + objetivo + ", " + n.getValor().ival+ "\n";
+        //int objetivo = reg.getObjetivo(true);
+        String[] siguientes = reg.getNsiguientes(1, true);
+        instrucciones +="li " + siguientes[0] + ", " + n.getValor().ival+ "\n";
     }
 
     public void visit(Nodo n) {
@@ -139,7 +139,7 @@ public class VisitanteGenerador implements Visitor{
     }
 
     public void visit(DivNodoBinario n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        visitSumResMult(n, "div", "div.s");
     }
 
     public void visit(EqualsNodoBinario n) {
@@ -197,7 +197,7 @@ public class VisitanteGenerador implements Visitor{
         boolean entero =  !(n.getType() == RL);
         
         // Registro objetivo
-        int objetivo = reg.getObjetivo(entero);
+        String objetivo = reg.getObjetivo(entero);
         String[] siguientes = reg.getNsiguientes(2,entero);
 
         // Genero el código del subárbol izquiero
@@ -229,9 +229,10 @@ public class VisitanteGenerador implements Visitor{
 
     public void visit(RealHoja n) {
         // Registro objetivo
-        int objetivo = reg.getObjetivo(false);
+        //int objetivo = reg.getObjetivo(false);
+        String[] siguientes = reg.getNsiguientes(1, false);
         
-        instrucciones +="li" + " " + objetivo + ", " + n.getValor().dval + "\n";
+        instrucciones +="li" + " " + siguientes[0] + ", " + n.getValor().dval + "\n";
     }
     
     public String getInstrucciones(){

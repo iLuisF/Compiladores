@@ -47,11 +47,11 @@ public class Registros{
       setObjetivo(nvo_objetivo, entero);
   }
 
-  public int getObjetivo(boolean entero){
+  public String getObjetivo(boolean entero){
       if(entero){
-          return objetivoEntero;
+          return E_registros[objetivoEntero];
       }else{
-          return objetivoFlotante;
+          return F_registros[objetivoFlotante];
       }
   }
 

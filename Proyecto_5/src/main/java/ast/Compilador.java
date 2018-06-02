@@ -44,7 +44,7 @@ public class Compilador{
         System.out.println("---------INSTRUCCIONES---------\n\n" + instr);
         FileWriter fw;
         try {
-            fw = new FileWriter(nombreArchivo.substring(0, nombreArchivo.length()-1) + ".asm");
+            fw = new FileWriter(nombreArchivo.substring(0, nombreArchivo.length()-2) + ".asm");
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(instr);
             bw.flush();
