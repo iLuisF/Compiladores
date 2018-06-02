@@ -11,11 +11,13 @@ public class Compilador{
     Nodo raiz;
     VisitorPrint v_print;
     VisitanteConcreto v_conc;
+    VisitanteGenerador generador;
 
     Compilador(Reader fuente){
         parser = new Parser(fuente);
         v_print = new VisitorPrint();
         v_conc = new VisitanteConcreto();
+        generador = new VisitanteGenerador();
     }
 
     public void ConstruyeAST(boolean debug){
@@ -27,10 +29,11 @@ public class Compilador{
     public void imprimeAST(){
         // TODO
         parser.raiz.accept(v_conc);
+        parser.raiz.accept(generador);  
     }
 
     public static void main(String[] args){
-            String archivo = "src/main/resources/fizzbuzz.p";
+            String archivo = "src/main/resources/test.p";
         try{
             Reader a = new FileReader(archivo);
             Compilador c  = new Compilador(a);
