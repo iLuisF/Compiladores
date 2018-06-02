@@ -30,6 +30,7 @@ public class Compilador{
         // TODO
         parser.raiz.accept(v_conc);
         parser.raiz.accept(generador);  
+        System.out.println(generador.getInstrucciones());
     }
 
     public static void main(String[] args){

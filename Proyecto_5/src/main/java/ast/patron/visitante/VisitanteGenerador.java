@@ -96,7 +96,9 @@ public class VisitanteGenerador implements Visitor{
     }
 
     public void visit(Compuesto n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(Nodo nodo : n.getHijos().getAll()){
+            nodo.accept(this);
+        }
     }
 
     public void visit(Hoja n) {
@@ -229,5 +231,9 @@ public class VisitanteGenerador implements Visitor{
         int objetivo = reg.getObjetivo(false);
         
         System.out.println("li" + " " + objetivo + ", " + n.getValor());
+    }
+    
+    public String getInstrucciones(){
+        return this.instrucciones;
     }
 }
